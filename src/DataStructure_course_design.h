@@ -1,14 +1,17 @@
 #pragma once
 #include "ui_DataStructure_course_design.h"
+#include "debug_label.h"
 #include <QMainWindow>
 
-class DataStructure_course_design : public QMainWindow {
+class DataStructure_course_design : public QMainWindow
+{
     Q_OBJECT
-    
+
 public:
-    DataStructure_course_design(QWidget* parent = nullptr);
+    debug_label *my_debugger;
+    DataStructure_course_design(QWidget *parent = nullptr);
     ~DataStructure_course_design();
 
 private:
-    Ui_DataStructure_course_design* ui;
+    Ui_DataStructure_course_design *ui;
 };
