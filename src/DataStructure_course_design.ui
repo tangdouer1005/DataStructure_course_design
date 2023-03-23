@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DataStructure_course_design</class>
+ <widget class="QMainWindow" name="DataStructure_course_design">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1106</width>
+    <height>556</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DataStructure_course_design</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label_personalinformation">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>261</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(85, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600; color:#ff0000;&quot;&gt;个人信息展示&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_navigation">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>390</y>
+      <width>261</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>导航</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_alarmclock">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>460</y>
+      <width>261</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>提醒与闹钟</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>150</y>
+      <width>781</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>25</number>
+    </attribute>
+    <row>
+     <property name="text">
+      <string>8:00~8:45</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>8:50~9:35</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>9:50~10:35</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>10:40~11:25</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>11:30~12:15</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>13:00~13:45</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>13:50~14:35</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>14:45~15:30</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>15:40~16:25</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>16:35~17:20</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>17:25~18:10</string>
+     </property>
+    </row>
+    <column>
+     <property name="text">
+      <string>周一</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>周二</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>周三</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>周四</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>周五</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>周六</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>周天</string>
+     </property>
+    </column>
+    <item row="0" column="0">
+     <property name="text">
+      <string>这是周一的第一节课</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_week">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>20</y>
+      <width>151</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 127);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; color:#ff0000;&quot;&gt;第i周/n周&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_add">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>20</y>
+      <width>131</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>添加</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_find">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>20</y>
+      <width>121</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>查找</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1106</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
