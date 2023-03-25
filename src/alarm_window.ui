@@ -6,29 +6,50 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>434</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+
+   <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>140</y>
-      <width>391</width>
-      <height>171</height>
+      <x>40</x>
+      <y>10</y>
+      <width>351</width>
+      <height>281</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 255);</string>
+    <item>
+     <property name="text">
+      <string>消息</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>嘀嘀嘀</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QListWidget" name="listWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>340</y>
+      <width>351</width>
+      <height>192</height>
+     </rect>
     </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;闹钟提醒&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
+    <item>
+     <property name="text">
+      <string>闹钟</string>
+     </property>
+    </item>
+
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -36,7 +57,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>434</width>
+
      <height>23</height>
     </rect>
    </property>

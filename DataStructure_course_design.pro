@@ -11,11 +11,16 @@ SOURCES += \
 HEADERS += \
     $$files($$PWD/src/*.h)
 
+RESOURCES += \
+    $$PWD/res/res.qrc
+
 FORMS += $$PWD/src/DataStructure_course_design.ui
 
 FORMS += $$PWD/src/navigation_window.ui
 
 FORMS += $$PWD/src/alarm_window.ui
+
+FORMS += $$PWD/src/login_window.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

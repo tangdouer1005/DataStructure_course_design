@@ -209,6 +209,13 @@
      <string>查找</string>
     </property>
    </widget>
+   <zorder>label_personalinformation</zorder>
+   <zorder>tableWidget</zorder>
+   <zorder>label_week</zorder>
+   <zorder>button_find</zorder>
+   <zorder>button_add</zorder>
+   <zorder>button_navigation</zorder>
+   <zorder>button_alarmclock</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -216,7 +223,7 @@
      <x>0</x>
      <y>0</y>
      <width>1106</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -224,4 +231,7 @@
  </widget>
  <resources/>
  <connections/>
+ <slots>
+  <slot>slot_alarmshow()</slot>
+ </slots>
 </ui>

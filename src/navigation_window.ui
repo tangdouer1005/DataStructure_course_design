@@ -6,28 +6,86 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>843</width>
+    <height>721</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+
+   <widget class="QLabel" name="label_map">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>140</y>
-      <width>431</width>
-      <height>211</height>
+      <x>350</x>
+      <y>10</y>
+      <width>491</width>
+      <height>671</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(85, 255, 127);</string>
+     <string notr="true">image: url(:/pic/map.jpg);</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;navigation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="search_line">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>271</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>这是搜索框</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="list_agenda">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>321</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>我来鹅城只办三件事!</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>公平!</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>公平!</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>还是他妈的! 公平!</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="button_search">
+    <property name="geometry">
+     <rect>
+      <x>274</x>
+      <y>70</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>搜索</string>
+
     </property>
    </widget>
   </widget>
@@ -36,13 +94,16 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>843</width>
      <height>23</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res/res.qrc"/>
+ </resources>
+
  <connections/>
 </ui>
