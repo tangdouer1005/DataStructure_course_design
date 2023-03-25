@@ -10,7 +10,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     DataStructure_course_design w;
 
-    w.show();
+    // w->my_login->show();
+
+    // w.show();
 
     return a.exec();
 }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "navigation_window.h"
 #include "alarm_window.h"
+#include "login_window.h"
 #include <QImage>
 class DataStructure_course_design : public QMainWindow
 {
@@ -13,7 +14,7 @@ public:
     debug_label *my_debugger;
     navigation_window *my_navigation;
     alarm_window *my_alarm;
-
+    login_window *my_login;
     // void slot_alarmshow()
     // {
     //     my_debugger->out("slot_alarmshow");
