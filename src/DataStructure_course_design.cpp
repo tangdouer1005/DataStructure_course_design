@@ -11,11 +11,13 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     my_debugger = new debug_label(this);
     my_navigation = new navigation_window(this);
     my_alarm = new alarm_window(this);
-    my_alarm->show();
-    my_navigation->show();
+    connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
+    connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
+
     my_debugger->show();
-    my_debugger->out("hello my_debugger!");
-    my_debugger->out("you can do it! my_debugger!");
+
+    // my_debugger->out("hello my_debugger!");
+    // my_debugger->out("you can do it! my_debugger!");
 }
 
 DataStructure_course_design::~DataStructure_course_design()

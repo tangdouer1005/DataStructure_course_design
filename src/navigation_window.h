@@ -1,7 +1,8 @@
 #pragma once
 #include "ui_navigation_window.h"
 #include <QMainWindow>
-
+#include <QImage>
+#include <QLabel>
 class navigation_window : public QMainWindow
 {
     Q_OBJECT

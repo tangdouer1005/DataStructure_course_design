@@ -14,20 +14,17 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_map">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>140</y>
-      <width>431</width>
-      <height>211</height>
+      <x>30</x>
+      <y>20</y>
+      <width>731</width>
+      <height>301</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(85, 255, 127);</string>
-    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;navigation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string/>
     </property>
    </widget>
   </widget>
