@@ -14,6 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+
    <widget class="QLabel" name="label_map">
     <property name="geometry">
      <rect>
@@ -84,6 +85,7 @@
     </property>
     <property name="text">
      <string>搜索</string>
+
     </property>
    </widget>
   </widget>
@@ -102,5 +104,6 @@
  <resources>
   <include location="../res/res.qrc"/>
  </resources>
+
  <connections/>
 </ui>
