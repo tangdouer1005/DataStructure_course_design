@@ -14,6 +14,10 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 035c40f7cc9a78447bbff8592f9b6805f19a8ff1
    <widget class="QLabel" name="label_map">
     <property name="geometry">
      <rect>
@@ -84,6 +88,10 @@
     </property>
     <property name="text">
      <string>搜索</string>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 035c40f7cc9a78447bbff8592f9b6805f19a8ff1
     </property>
    </widget>
   </widget>
@@ -102,5 +110,9 @@
  <resources>
   <include location="../res/res.qrc"/>
  </resources>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 035c40f7cc9a78447bbff8592f9b6805f19a8ff1
  <connections/>
 </ui>
