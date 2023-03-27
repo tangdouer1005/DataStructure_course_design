@@ -14,10 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-<<<<<<< HEAD
-=======
-
->>>>>>> 035c40f7cc9a78447bbff8592f9b6805f19a8ff1
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
@@ -52,10 +48,6 @@
       <string>闹钟</string>
      </property>
     </item>
-<<<<<<< HEAD
-=======
-
->>>>>>> 035c40f7cc9a78447bbff8592f9b6805f19a8ff1
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -64,10 +56,6 @@
      <x>0</x>
      <y>0</y>
      <width>434</width>
-<<<<<<< HEAD
-=======
-
->>>>>>> 035c40f7cc9a78447bbff8592f9b6805f19a8ff1
      <height>23</height>
     </rect>
    </property>
