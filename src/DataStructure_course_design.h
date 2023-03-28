@@ -7,6 +7,7 @@
 #include "login_window.h"
 #include <QImage>
 #include <QFile>
+#include <QMessageBox>
 #include <vector>
 #include <map>
 class DataStructure_course_design : public QMainWindow

@@ -36,12 +36,25 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
                     }
                     else
                     {
+                            //  show();
+                        QApplication::setQuitOnLastWindowClosed(false);
+                    	QMessageBox::information(this, 
+                        tr("wrong password"), 
+                        tr("请输入正确的password"),
+                        QMessageBox::Ok | QMessageBox::Cancel, 
+                        QMessageBox::Ok);
                         my_debugger->out("wrong password");
                     }
                 }
                 else
                 {
-                    my_debugger->out("no this id");
+                        QApplication::setQuitOnLastWindowClosed(false);
+                    	QMessageBox::information(this, 
+                        tr("wrong id"), 
+                        tr("请输入正确的id"),
+                        QMessageBox::Ok | QMessageBox::Cancel, 
+                        QMessageBox::Ok);
+                        my_debugger->out("no this id");
                 } });
 
     //  show();
