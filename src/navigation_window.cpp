@@ -6,7 +6,6 @@ navigation_window::navigation_window(QWidget *parent)
     ui->setupUi(this);
     this->setFixedSize(843, 721);
     ui->label_map->show();
-
 }
 
 navigation_window::~navigation_window()

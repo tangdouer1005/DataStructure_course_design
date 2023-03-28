@@ -14,7 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
@@ -49,7 +48,6 @@
       <string>闹钟</string>
      </property>
     </item>
-
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -58,7 +56,6 @@
      <x>0</x>
      <y>0</y>
      <width>434</width>
-
      <height>23</height>
     </rect>
    </property>

@@ -6,6 +6,9 @@
 #include "alarm_window.h"
 #include "login_window.h"
 #include <QImage>
+#include <QFile>
+#include <vector>
+#include <map>
 class DataStructure_course_design : public QMainWindow
 {
     Q_OBJECT

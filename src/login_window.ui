@@ -27,7 +27,7 @@
      <string>login</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -38,7 +38,7 @@
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="lineedit_password"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
@@ -55,7 +55,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="lineedit_id"/>
      </item>
     </layout>
    </widget>
@@ -66,7 +66,7 @@
      <x>0</x>
      <y>0</y>
      <width>404</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
