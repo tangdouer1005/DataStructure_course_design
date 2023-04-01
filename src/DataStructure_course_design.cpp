@@ -3,6 +3,8 @@
 DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     : QMainWindow(parent), ui(new Ui_DataStructure_course_design)
 {
+
+    QApplication::setQuitOnLastWindowClosed(false);
     ui->setupUi(this);
     this->setFixedSize(1106, 556);
     // ui->hello_qt_world->setText("hello_qt_world");
@@ -22,7 +24,6 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
             {
                 QString in_id = my_login->ui->lineedit_id->text();
                 QString in_password = my_login->ui->lineedit_password->text();
-
                 // my_debugger->out(in_password);
                 // my_debugger->out(in_id);
                 // int n = in_id.length();
@@ -36,8 +37,6 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
                     }
                     else
                     {
-                            //  show();
-                        QApplication::setQuitOnLastWindowClosed(false);
                     	QMessageBox::information(this, 
                         tr("wrong password"), 
                         tr("请输入正确的password"),
@@ -48,8 +47,7 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
                 }
                 else
                 {
-                        QApplication::setQuitOnLastWindowClosed(false);
-                    	QMessageBox::information(this, 
+                        QMessageBox::information(this, 
                         tr("wrong id"), 
                         tr("请输入正确的id"),
                         QMessageBox::Ok | QMessageBox::Cancel, 
@@ -57,7 +55,6 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
                         my_debugger->out("no this id");
                 } });
 
-    //  show();
     my_debugger->show();
     // for (auto iter : my_login->id2password)
     // {
@@ -66,9 +63,6 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     //     my_debugger->out(QString::number(n));
     //     my_debugger->out(iter.second);
     // }
-    // my_debugger->out(allStr);
-    //    my_debugger->out("hello my_debugger!");
-    //    my_debugger->out("you can do it! my_debugger!");
 }
 
 DataStructure_course_design::~DataStructure_course_design()
