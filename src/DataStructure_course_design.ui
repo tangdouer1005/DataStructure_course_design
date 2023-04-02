@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1106</width>
-    <height>556</height>
+    <width>1107</width>
+    <height>637</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>390</y>
+      <y>410</y>
       <width>261</width>
       <height>51</height>
      </rect>
@@ -47,7 +47,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>460</y>
+      <y>510</y>
       <width>261</width>
       <height>51</height>
      </rect>
@@ -56,13 +56,13 @@
      <string>提醒与闹钟</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="my_schedule_table">
     <property name="geometry">
      <rect>
       <x>310</x>
-      <y>150</y>
+      <y>110</y>
       <width>781</width>
-      <height>361</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="lineWidth">
@@ -73,57 +73,77 @@
     </attribute>
     <row>
      <property name="text">
-      <string>8:00~8:45</string>
+      <string>6:00~7:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>8:50~9:35</string>
+      <string>7:00~8:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>9:50~10:35</string>
+      <string>8:00~9:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>10:40~11:25</string>
+      <string>9:00~10:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>11:30~12:15</string>
+      <string>10:00~11:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>13:00~13:45</string>
+      <string>11:00~12:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>13:50~14:35</string>
+      <string>12:00~13:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>14:45~15:30</string>
+      <string>13:00~14:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>15:40~16:25</string>
+      <string>14:00~15:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>16:35~17:20</string>
+      <string>15:00~16:00</string>
      </property>
     </row>
     <row>
      <property name="text">
-      <string>17:25~18:10</string>
+      <string>16:00~17:00</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>17:00~18:00</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>18:00~19:00</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>19:00~20:00</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>21:00~22:00</string>
      </property>
     </row>
     <column>
@@ -163,7 +183,7 @@
     </column>
     <item row="0" column="0">
      <property name="text">
-      <string>这是周一的第一节课</string>
+      <string/>
      </property>
     </item>
    </widget>
@@ -210,7 +230,7 @@
     </property>
    </widget>
    <zorder>label_personalinformation</zorder>
-   <zorder>tableWidget</zorder>
+   <zorder>my_schedule_table</zorder>
    <zorder>label_week</zorder>
    <zorder>button_find</zorder>
    <zorder>button_add</zorder>
@@ -222,8 +242,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1106</width>
-     <height>26</height>
+     <width>1107</width>
+     <height>23</height>
     </rect>
    </property>
   </widget>

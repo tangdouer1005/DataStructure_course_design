@@ -5,7 +5,7 @@ login_window::login_window(QWidget *parent)
 {
     ui->setupUi(this);
     this->setFixedSize(404, 286);
-    QFile file("./src/id_n_password.txt");
+    QFile file("./data/id_n_password.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         // my_debugger->out("文件打开失败");

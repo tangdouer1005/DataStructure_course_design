@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>843</width>
-    <height>721</height>
+    <width>959</width>
+    <height>707</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,14 +17,14 @@
    <widget class="QLabel" name="label_map">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>370</x>
       <y>10</y>
-      <width>491</width>
-      <height>671</height>
+      <width>581</width>
+      <height>651</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">image: url(:/pic/map.jpg);</string>
+     <string notr="true">image: url(:/pic/map_1.jpg);</string>
     </property>
     <property name="text">
      <string/>
@@ -92,7 +92,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>843</width>
+     <width>959</width>
      <height>23</height>
     </rect>
    </property>
