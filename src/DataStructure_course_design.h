@@ -40,11 +40,13 @@ public:
     alarm_window *my_alarm;
     login_window *my_login;
     showevent_window *my_showevent;
-
-    std::map<QString, course_information *> courses;
-
     DataStructure_course_design(QWidget *parent = nullptr);
     ~DataStructure_course_design();
+    std::map<QString, course_information *> courses;
+
+private slots:
+
+    void slot_click_cell(QTableWidgetItem *);
 
 private:
     Ui_DataStructure_course_design *ui;

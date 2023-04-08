@@ -10,6 +10,5 @@ public:
     showevent_window(QWidget *parent = nullptr);
     ~showevent_window();
 
-private:
     Ui_showevent_window *ui;
 };

@@ -12,7 +12,10 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     my_alarm = new alarm_window(this);
     my_login = new login_window(this);
     my_showevent = new showevent_window(this);
+    // my_showevent->show();
+    // my_debugger->show();
 
+    // my_debugger->out("yes_show");
     QFile file_course("./data/course.txt");
     if (!file_course.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -72,20 +75,20 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
         courses.insert({tmp_ci->name, tmp_ci});
     }
 
-    // for (auto i : courses)
-    // {
-    //     my_debugger->out(i.first);
-    //     my_debugger->out(QString::number(((i.second)->course_weeks).size()));
-    //     my_debugger->out((i.second)->course_site_building);
-    // }
+    // connect(ui->my_schedule_table, SIGNAL(cellClicked(int, int)), this, SLOT(slot_click_cell(int, int)));
+
+    ui->my_schedule_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     for (int i = 0; i < 15; i++)
     {
         for (int j = 0; j < 7; j++)
         {
             // ui->my_schedule_table->setItem(i, j, new QTableWidgetItem(QString::number(i) + QString(" ") + QString::number(j)));
-            ui->my_schedule_table->setItem(i, j, new QTableWidgetItem(" "));
+            ui->my_schedule_table->setItem(i, j, new QTableWidgetItem(""));
         }
     }
+    // connect(ui->my_schedule_table, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slot_click_cell(QTableWidgetItem *)));
+    connect(ui->my_schedule_table, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slot_click_cell(QTableWidgetItem *)));
+
     QFile file_default_course("./data/default_course.txt");
     if (!file_default_course.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -96,7 +99,6 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     while (!default_course_in.atEnd())
     {
         QString cur_course_name = default_course_in.readLine();
-        // my_debugger->out(cur_course_name);
         if (courses.count(cur_course_name))
         {
             for (auto i : (courses[cur_course_name])->course_time)
@@ -112,17 +114,13 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
 
     connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
     connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
-    // connect((my_login.ui)->button_login, SIGNAL(clicked()), this, SLOT(show()));
 
     my_login->show();
     connect((my_login->ui)->button_login, &QPushButton::clicked, [=]()
             {
                 QString in_id = my_login->ui->lineedit_id->text();
                 QString in_password = my_login->ui->lineedit_password->text();
-                // my_debugger->out(in_password);
-                // my_debugger->out(in_id);
-                // int n = in_id.length();
-                // my_debugger -> out(QString::number(n));
+
                 if (my_login->id2password.count(in_id))
                 {
                     if (my_login->id2password[in_id] == in_password)
@@ -149,18 +147,52 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
                         QMessageBox::Ok);
                         my_debugger->out("no this id");
                 } });
-
-    my_debugger->show();
-    // for (auto iter : my_login->id2password)
-    // {
-    //     my_debugger->out(iter.first);
-    //     int n = iter.first.length();
-    //     my_debugger->out(QString::number(n));
-    //     my_debugger->out(iter.second);
-    // }
 }
 
 DataStructure_course_design::~DataStructure_course_design()
 {
     delete ui;
+}
+void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
+{
+    if (item->text() != QString(""))
+    {
+        (my_showevent->ui->show_something)->clear();
+        auto this_course = courses[item->text()];
+        // my_debugger->out(this_course -> );
+        QString week = QString("上课周数: ");
+        for (auto iter : this_course->course_weeks)
+        {
+            week += " ";
+            week += QString::number(iter);
+        }
+        QString time = QString("上课时间: ");
+        for (auto i : this_course->course_time)
+        {
+            int st = i.second[0];
+            st += 7;
+            int ed = st + i.second.size();
+            time += QString("周") + QString::number(i.first) + " " + QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
+        }
+        QString site = QString("上课地点: ") + this_course->course_site_building;
+        QString final_exam_time = QString("期末时间: 第18周");
+        // final_exam_time +=
+        int st = (this_course->exam_time).second[0];
+        st += 7;
+        int ed = st + (this_course->exam_time).second.size();
+        final_exam_time += QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
+        QString final_exam_site = "期末地点: " + this_course->exam_site_building;
+
+        (my_showevent->ui->show_something)->append(item->text());
+        (my_showevent->ui->show_something)->append(week);
+        (my_showevent->ui->show_something)->append(time);
+        (my_showevent->ui->show_something)->append(final_exam_time);
+        (my_showevent->ui->show_something)->append(final_exam_site);
+        // my_debugger->out(week);
+        // my_debugger->out(time);
+        // my_debugger->out(site);
+        // my_debugger->out(final_exam_time);
+        // my_debugger->out(final_exam_site);
+        my_showevent->show();
+    }
 }
