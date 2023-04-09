@@ -13,9 +13,12 @@
 #include <QString>
 #include <QTextStream>
 #include <QTextCodec>
+#include <QTimer>
 #include <string>
 #include <vector>
 #include <map>
+
+#define TIME_UNIT 500
 typedef struct course_information
 {
     QString name;
@@ -41,6 +44,12 @@ public:
     login_window *my_login;
     showevent_window *my_showevent;
 
+    QTimer *my_timer;
+
+    int cur_week = 1;
+    int cur_day = 1;
+    int cur_time = 0;
+
     std::map<QString, course_information *> courses;
 
     DataStructure_course_design(QWidget *parent = nullptr);
@@ -53,6 +62,9 @@ private slots:
 
     void slot_click_cell(QTableWidgetItem *);
     void slot_login();
+    void slot_timer_update();
+
+    void slot_time_edit();
 
 private:
     Ui_DataStructure_course_design *ui;

@@ -187,22 +187,6 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label_week">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>20</y>
-      <width>151</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 127);</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; color:#ff0000;&quot;&gt;第i周/n周&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="button_add">
     <property name="geometry">
      <rect>
@@ -229,13 +213,143 @@
      <string>查找</string>
     </property>
    </widget>
+   <widget class="QLabel" name="day_label">
+    <property name="geometry">
+     <rect>
+      <x>357</x>
+      <y>40</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>40</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>day :</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="week_label">
+    <property name="geometry">
+     <rect>
+      <x>357</x>
+      <y>10</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>10</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>week:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="time_label">
+    <property name="geometry">
+     <rect>
+      <x>357</x>
+      <y>70</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>70</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>hour:</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="week_spinbox">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>20</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="day_spinbox">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>50</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="time_spinbox">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>80</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_edit_time">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>20</y>
+      <width>75</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>确认跳转</string>
+    </property>
+   </widget>
    <zorder>label_personalinformation</zorder>
    <zorder>my_schedule_table</zorder>
-   <zorder>label_week</zorder>
    <zorder>button_find</zorder>
    <zorder>button_add</zorder>
    <zorder>button_navigation</zorder>
    <zorder>button_alarmclock</zorder>
+   <zorder>day_label</zorder>
+   <zorder>label_4</zorder>
+   <zorder>week_label</zorder>
+   <zorder>label_5</zorder>
+   <zorder>time_label</zorder>
+   <zorder>label_6</zorder>
+   <zorder>week_spinbox</zorder>
+   <zorder>day_spinbox</zorder>
+   <zorder>time_spinbox</zorder>
+   <zorder>button_edit_time</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

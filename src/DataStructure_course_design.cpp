@@ -12,10 +12,7 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     get_course();
 
     my_login->show();
-
-    connect((my_login->ui)->button_login, SIGNAL(clicked()), this, SLOT(slot_login()));
-    connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
-    connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
+    my_debugger->show();
 }
 
 DataStructure_course_design::~DataStructure_course_design()
@@ -71,6 +68,7 @@ void DataStructure_course_design::slot_login()
         {
             show();
             my_login->close();
+            my_timer->start(TIME_UNIT);
         }
         else
         {
@@ -91,6 +89,64 @@ void DataStructure_course_design::slot_login()
                                  QMessageBox::Ok);
         my_debugger->out("no this id");
     }
+}
+
+void DataStructure_course_design::slot_timer_update()
+{
+    cur_time++;
+    if (cur_time == 24)
+    {
+        cur_time = 0;
+        cur_day++;
+        if (cur_day == 8)
+        {
+            cur_day = 1;
+            cur_week++;
+            if (cur_week == 19)
+            {
+                // 本学期结束, 删掉窗口
+            }
+        }
+    }
+    ui->week_label->setText(QString::number(cur_week));
+    ui->day_label->setText(QString::number(cur_day));
+    ui->time_label->setText(QString::number(cur_time));
+    my_debugger->out(QString::number(cur_week) + " " + QString::number(cur_day) + " " + QString::number(cur_time));
+}
+
+void DataStructure_course_design::slot_time_edit()
+{
+    cur_week = ui->week_spinbox->value();
+    cur_day = ui->day_spinbox->value();
+    cur_time = ui->time_spinbox->value();
+    ui->week_label->setText(QString::number(cur_week));
+    ui->day_label->setText(QString::number(cur_day));
+    ui->time_label->setText(QString::number(cur_time));
+}
+void DataStructure_course_design::member_init()
+{
+    // 成员初始化, 内存分配
+    my_debugger = new debug_label(this);
+    my_navigation = new navigation_window(this);
+    my_alarm = new alarm_window(this);
+    my_login = new login_window(this);
+    my_showevent = new showevent_window(this);
+    my_timer = new QTimer(this);
+    ui->my_schedule_table->setEditTriggers(QAbstractItemView::NoEditTriggers); // 课程表不可编辑设置
+
+    ui->week_spinbox->setRange(1, 18);
+    ui->day_spinbox->setRange(1, 7);
+    ui->time_spinbox->setRange(0, 23);
+    // ui->week_edit->setFont(QFont("黑体", 16));
+    // ui->day_edit->setFont(QFont("黑体", 16));
+    // ui->time_edit->setFont(QFont("黑体", 16));
+
+    connect(ui->button_edit_time, SIGNAL(clicked()), this, SLOT(slot_time_edit()));
+    connect(my_timer, SIGNAL(timeout()), this, SLOT(slot_timer_update()));
+
+    connect((my_login->ui)->button_login, SIGNAL(clicked()), this, SLOT(slot_login()));
+    connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
+    connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
 }
 void DataStructure_course_design::read_course_information()
 {
@@ -154,16 +210,6 @@ void DataStructure_course_design::read_course_information()
     }
 }
 
-void DataStructure_course_design::member_init()
-{
-    // 成员初始化, 内存分配
-    my_debugger = new debug_label(this);
-    my_navigation = new navigation_window(this);
-    my_alarm = new alarm_window(this);
-    my_login = new login_window(this);
-    my_showevent = new showevent_window(this);
-    ui->my_schedule_table->setEditTriggers(QAbstractItemView::NoEditTriggers); // 课程表不可编辑设置
-}
 void DataStructure_course_design::get_course()
 {
     // 课程表初始化
