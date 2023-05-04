@@ -63,8 +63,8 @@ private slots:
     void slot_click_cell(QTableWidgetItem *);
     void slot_login();
     void slot_timer_update();
-
     void slot_time_edit();
+    void slot_time_st();
 
 private:
     Ui_DataStructure_course_design *ui;

@@ -123,6 +123,19 @@ void DataStructure_course_design::slot_time_edit()
     ui->day_label->setText(QString::number(cur_day));
     ui->time_label->setText(QString::number(cur_time));
 }
+void DataStructure_course_design::slot_time_st()
+{
+    if (ui->button_time_st->text() == QString("停止"))
+    {
+        ui->button_time_st->setText("开始");
+        my_timer->stop();
+    }
+    else
+    {
+        ui->button_time_st->setText("停止");
+        my_timer->start(TIME_UNIT);
+    }
+}
 void DataStructure_course_design::member_init()
 {
     // 成员初始化, 内存分配
@@ -147,6 +160,7 @@ void DataStructure_course_design::member_init()
     connect((my_login->ui)->button_login, SIGNAL(clicked()), this, SLOT(slot_login()));
     connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
     connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
+    connect(ui->button_time_st, SIGNAL(clicked()), this, SLOT(slot_time_st()));
 }
 void DataStructure_course_design::read_course_information()
 {
