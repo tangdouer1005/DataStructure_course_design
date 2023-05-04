@@ -6,6 +6,7 @@
 #include "alarm_window.h"
 #include "login_window.h"
 #include "showevent_window.h"
+#include "add_dairy_event_window.h"
 #include <QImage>
 #include <QFile>
 #include <QMessageBox>
@@ -46,6 +47,7 @@ public:
     alarm_window *my_alarm;
     login_window *my_login;
     showevent_window *my_showevent;
+    add_dairy_event_window *my_add;
 
     QTimer *my_timer;
 
@@ -69,6 +71,7 @@ private slots:
     void slot_timer_update();
     void slot_time_edit();
     void slot_time_st();
+    void slot_add_dairy();
 
 private:
     Ui_DataStructure_course_design *ui;

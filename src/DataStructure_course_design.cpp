@@ -23,37 +23,45 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
 {
     if (item->text() != QString(""))
     {
-        (my_showevent->ui->show_something)->clear();
-        auto this_course = courses[item->text()];
-        // my_debugger->out(this_course -> );
-        QString week = QString("上课周数: ");
-        for (auto iter : this_course->course_weeks)
-        {
-            week += " ";
-            week += QString::number(iter);
-        }
-        QString time = QString("上课时间: ");
-        for (auto i : this_course->course_time)
-        {
-            int st = i.second[0];
-            st += 7;
-            int ed = st + i.second.size();
-            time += QString("周") + QString::number(i.first) + " " + QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
-        }
-        QString site = QString("上课地点: ") + this_course->course_site_building;
-        QString final_exam_time = QString("期末时间: 第18周");
-        // final_exam_time +=
-        int st = (this_course->exam_time).second[0];
-        st += 7;
-        int ed = st + (this_course->exam_time).second.size();
-        final_exam_time += QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
-        QString final_exam_site = "期末地点: " + this_course->exam_site_building;
 
-        (my_showevent->ui->show_something)->append(item->text());
-        (my_showevent->ui->show_something)->append(week);
-        (my_showevent->ui->show_something)->append(time);
-        (my_showevent->ui->show_something)->append(final_exam_time);
-        (my_showevent->ui->show_something)->append(final_exam_site);
+        (my_showevent->ui->show_something)->clear();
+        if (!courses.count(item->text()))
+        {
+            (my_showevent->ui->show_something)->append("这是一个日常事务");
+        }
+        else
+        {
+            auto this_course = courses[item->text()];
+            // my_debugger->out(this_course -> );
+            QString week = QString("上课周数: ");
+            for (auto iter : this_course->course_weeks)
+            {
+                week += " ";
+                week += QString::number(iter);
+            }
+            QString time = QString("上课时间: ");
+            for (auto i : this_course->course_time)
+            {
+                int st = i.second[0];
+                st += 7;
+                int ed = st + i.second.size();
+                time += QString("周") + QString::number(i.first) + " " + QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
+            }
+            QString site = QString("上课地点: ") + this_course->course_site_building;
+            QString final_exam_time = QString("期末时间: 第18周");
+            // final_exam_time +=
+            int st = (this_course->exam_time).second[0];
+            st += 7;
+            int ed = st + (this_course->exam_time).second.size();
+            final_exam_time += QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
+            QString final_exam_site = "期末地点: " + this_course->exam_site_building;
+
+            (my_showevent->ui->show_something)->append(item->text());
+            (my_showevent->ui->show_something)->append(week);
+            (my_showevent->ui->show_something)->append(time);
+            (my_showevent->ui->show_something)->append(final_exam_time);
+            (my_showevent->ui->show_something)->append(final_exam_site);
+        }
         my_showevent->show();
     }
 }
@@ -138,6 +146,32 @@ void DataStructure_course_design::slot_time_st()
         my_timer->start(TIME_UNIT);
     }
 }
+
+void DataStructure_course_design::slot_add_dairy()
+{
+    int week = my_add->ui->week_spinbox->value();
+    int day = my_add->ui->day_spinbox->value();
+    int time = my_add->ui->time_spinbox->value();
+    if (schedule[week - 1][day - 1][time - 6] == QString(""))
+    {
+        schedule[week][day - 1][time - 6] = QString(my_add->ui->event_line->text());
+        QMessageBox::information(this,
+                                 tr("提示"),
+                                 tr("添加成功"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
+        set_schedule();
+        my_add->close();
+    }
+    else
+    {
+        QMessageBox::information(this,
+                                 tr("提示"),
+                                 tr("该时间段已经被占用,请选择其他时间"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
+    }
+}
 void DataStructure_course_design::member_init()
 {
     // 成员初始化, 内存分配
@@ -146,6 +180,7 @@ void DataStructure_course_design::member_init()
     my_alarm = new alarm_window(this);
     my_login = new login_window(this);
     my_showevent = new showevent_window(this);
+    my_add = new add_dairy_event_window(this);
     my_timer = new QTimer(this);
     ui->my_schedule_table->setEditTriggers(QAbstractItemView::NoEditTriggers); // 课程表不可编辑设置
 
@@ -162,6 +197,9 @@ void DataStructure_course_design::member_init()
     connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
     connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
     connect(ui->button_time_st, SIGNAL(clicked()), this, SLOT(slot_time_st()));
+
+    connect(ui->button_add, SIGNAL(clicked()), my_add, SLOT(show()));
+    connect(my_add->ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_add_dairy()));
 }
 void DataStructure_course_design::read_course_information()
 {
@@ -267,20 +305,6 @@ void DataStructure_course_design::get_course()
         }
     }
     set_schedule();
-    // while (!default_course_in.atEnd())
-    // {
-    //     QString cur_course_name = default_course_in.readLine();
-    //     if (courses.count(cur_course_name))
-    //     {
-    //         for (auto i : (courses[cur_course_name])->course_time)
-    //         {
-    //             for (auto j : i.second)
-    //             {
-    //                 (ui->my_schedule_table->item(j + 1, i.first - 1))->setText(cur_course_name);
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 void DataStructure_course_design::set_schedule()
