@@ -102,6 +102,7 @@ void DataStructure_course_design::slot_timer_update()
         {
             cur_day = 1;
             cur_week++;
+            set_schedule();
             if (cur_week == 19)
             {
                 // 本学期结束, 删掉窗口
@@ -122,6 +123,7 @@ void DataStructure_course_design::slot_time_edit()
     ui->week_label->setText(QString::number(cur_week));
     ui->day_label->setText(QString::number(cur_day));
     ui->time_label->setText(QString::number(cur_time));
+    set_schedule();
 }
 void DataStructure_course_design::slot_time_st()
 {
@@ -147,12 +149,11 @@ void DataStructure_course_design::member_init()
     my_timer = new QTimer(this);
     ui->my_schedule_table->setEditTriggers(QAbstractItemView::NoEditTriggers); // 课程表不可编辑设置
 
+    schedule = std::vector<std::vector<std::vector<QString>>>(18, std::vector<std::vector<QString>>(7 + 1, std::vector<QString>(15 + 1, QString(""))));
+
     ui->week_spinbox->setRange(1, 18);
     ui->day_spinbox->setRange(1, 7);
     ui->time_spinbox->setRange(0, 23);
-    // ui->week_edit->setFont(QFont("黑体", 16));
-    // ui->day_edit->setFont(QFont("黑体", 16));
-    // ui->time_edit->setFont(QFont("黑体", 16));
 
     connect(ui->button_edit_time, SIGNAL(clicked()), this, SLOT(slot_time_edit()));
     connect(my_timer, SIGNAL(timeout()), this, SLOT(slot_timer_update()));
@@ -165,13 +166,16 @@ void DataStructure_course_design::member_init()
 void DataStructure_course_design::read_course_information()
 {
     // 课程信息读取
+
+    // 打开课程信息文件
     QFile file_course("./data/course.txt");
     if (!file_course.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         my_debugger->out("文件打开失败");
     }
     QTextStream course_in(&file_course);
-    course_in.setCodec("UTF-8"); // dd
+    course_in.setCodec("UTF-8"); // 确定编码格式
+
     while (!course_in.atEnd())
     {
         course_information *tmp_ci = new course_information;
@@ -231,10 +235,10 @@ void DataStructure_course_design::get_course()
     {
         for (int j = 0; j < 7; j++)
         {
-            // ui->my_schedule_table->setItem(i, j, new QTableWidgetItem(QString::number(i) + QString(" ") + QString::number(j)));
             ui->my_schedule_table->setItem(i, j, new QTableWidgetItem(""));
         }
     }
+
     connect(ui->my_schedule_table, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slot_click_cell(QTableWidgetItem *)));
     // 课程读取, 并将其显示在课程表中
     QFile file_default_course("./data/default_course.txt");
@@ -244,19 +248,55 @@ void DataStructure_course_design::get_course()
     }
     QTextStream default_course_in(&file_default_course);
     default_course_in.setCodec("UTF-8");
+
     while (!default_course_in.atEnd())
     {
         QString cur_course_name = default_course_in.readLine();
         if (courses.count(cur_course_name))
         {
-            for (auto i : (courses[cur_course_name])->course_time)
+            for (auto week : (courses[cur_course_name])->course_weeks)
             {
-
-                for (auto j : i.second)
+                for (auto day : (courses[cur_course_name])->course_time)
                 {
-                    (ui->my_schedule_table->item(j + 1, i.first - 1))->setText(cur_course_name);
+                    for (auto time : day.second)
+                    {
+                        schedule[week - 1][day.first - 1][time + 1] = cur_course_name;
+                    }
                 }
             }
+        }
+    }
+    set_schedule();
+    // while (!default_course_in.atEnd())
+    // {
+    //     QString cur_course_name = default_course_in.readLine();
+    //     if (courses.count(cur_course_name))
+    //     {
+    //         for (auto i : (courses[cur_course_name])->course_time)
+    //         {
+    //             for (auto j : i.second)
+    //             {
+    //                 (ui->my_schedule_table->item(j + 1, i.first - 1))->setText(cur_course_name);
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+void DataStructure_course_design::set_schedule()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            (ui->my_schedule_table->item(j, i))->setText("");
+        }
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            (ui->my_schedule_table->item(j, i))->setText(schedule[cur_week][i][j]);
         }
     }
 }

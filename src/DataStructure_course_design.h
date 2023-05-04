@@ -21,8 +21,11 @@
 #define TIME_UNIT 500
 typedef struct course_information
 {
+    // 该课程的名字
     QString name;
+    // 有课程的周
     std::vector<int> course_weeks;
+    // 在周几及其时间段
     std::vector<std::pair<int, std::vector<int>>> course_time;
     QString course_site_building;
     QString course_site_room;
@@ -51,13 +54,14 @@ public:
     int cur_time = 0;
 
     std::map<QString, course_information *> courses;
+    std::vector<std::vector<std::vector<QString>>> schedule;
 
     DataStructure_course_design(QWidget *parent = nullptr);
     ~DataStructure_course_design();
     void member_init();
     void read_course_information();
     void get_course();
-
+    void set_schedule();
 private slots:
 
     void slot_click_cell(QTableWidgetItem *);
