@@ -120,7 +120,7 @@ void DataStructure_course_design::slot_timer_update()
     ui->week_label->setText(QString::number(cur_week));
     ui->day_label->setText(QString::number(cur_day));
     ui->time_label->setText(QString::number(cur_time));
-    my_debugger->out(QString::number(cur_week) + " " + QString::number(cur_day) + " " + QString::number(cur_time));
+    // my_debugger->out(QString::number(cur_week) + " " + QString::number(cur_day) + " " + QString::number(cur_time));
 }
 
 void DataStructure_course_design::slot_time_edit()
@@ -200,6 +200,11 @@ void DataStructure_course_design::member_init()
 
     connect(ui->button_add, SIGNAL(clicked()), my_add, SLOT(show()));
     connect(my_add->ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_add_dairy()));
+    QSize size = my_navigation->ui->label_map->sizeHint(); // 获取自适应大小后的控件大小
+    int width = size.width();                              // 获取控件的宽度
+    int height = size.height();                            // 获取控件的高度
+    my_debugger->out(QString::number(width));
+    my_debugger->out(QString::number(height));
 }
 void DataStructure_course_design::read_course_information()
 {

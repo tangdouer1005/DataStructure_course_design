@@ -18,14 +18,9 @@ login_window::login_window(QWidget *parent)
         QString password = QString(array_2);
         id = id.mid(4);
         password = password.mid(4);
-        // id.replace(id.length() - 1, 1, "\t");
-
-        // password.replace(password.length() - 1, 1, "\t");
         id.remove(id.length() - 1, 1);
         password.remove(password.length() - 1, 1);
         id2password[id] = password;
-        // my_debugger->out(id);
-        // my_debugger->out(password);
     }
 }
 

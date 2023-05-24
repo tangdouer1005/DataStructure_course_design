@@ -11,6 +11,5 @@ public:
     navigation_window(QWidget *parent = nullptr);
     ~navigation_window();
 
-private:
     Ui_navigation_window *ui;
 };
