@@ -8,7 +8,6 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
 
     member_init();
     read_course_information();
-    get_course();
 
     my_login->show();
     my_debugger->show();
@@ -16,6 +15,45 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
 
 DataStructure_course_design::~DataStructure_course_design()
 {
+    QFile file(QString("./data/") + user->id);
+
+    // 打开文件并检查是否成功
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream fileOut(&file);
+        fileOut.setCodec("UTF-8"); // 确定编码格式
+
+        fileOut << user->id << " " << user->password << "\n";
+        fileOut << user->week << " " << user->day << " " << user->hour << "\n";
+
+        fileOut << user->courses.size() << "\n";
+        for (auto iter : user->courses)
+        {
+            fileOut << iter << QString(" ");
+        }
+        fileOut << "\n";
+
+        fileOut << user->dairy_event.size() << "\n";
+        for (auto iter : user->dairy_event)
+        {
+            fileOut << iter.name << " "
+                    << iter.site << " "
+                    << iter.week << " "
+                    << iter.day << " "
+                    << iter.hour << "\n";
+        }
+
+        fileOut << user->temporary_event.size() << "\n";
+        for (auto iter : user->temporary_event)
+        {
+            fileOut << iter.name << " "
+                    << iter.site << " "
+                    << iter.week << " "
+                    << iter.day << " "
+                    << iter.hour << "\n";
+        }
+        file.close();
+    }
     delete ui;
 }
 void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
@@ -67,36 +105,36 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
 
 void DataStructure_course_design::slot_timer_update()
 {
-    cur_time++;
-    if (cur_time == 24)
+    user->hour++;
+    if (user->hour == 24)
     {
-        cur_time = 0;
-        cur_day++;
-        if (cur_day == 8)
+        user->hour = 0;
+        user->day++;
+        if (user->day == 8)
         {
-            cur_day = 1;
-            cur_week++;
+            user->day = 1;
+            user->week++;
             set_schedule();
-            if (cur_week == 19)
+            if (user->week == 19)
             {
                 // 本学期结束, 删掉窗口
             }
         }
     }
-    ui->week_label->setText(QString::number(cur_week));
-    ui->day_label->setText(QString::number(cur_day));
-    ui->time_label->setText(QString::number(cur_time));
-    // my_debugger->out(QString::number(cur_week) + " " + QString::number(cur_day) + " " + QString::number(cur_time));
+    ui->week_label->setText(QString::number(user->week));
+    ui->day_label->setText(QString::number(user->day));
+    ui->time_label->setText(QString::number(user->hour));
+    // my_debugger->out(QString::number(user->week) + " " + QString::number(user->day) + " " + QString::number(user->hour));
 }
 
 void DataStructure_course_design::slot_time_edit()
 {
-    cur_week = ui->week_spinbox->value();
-    cur_day = ui->day_spinbox->value();
-    cur_time = ui->time_spinbox->value();
-    ui->week_label->setText(QString::number(cur_week));
-    ui->day_label->setText(QString::number(cur_day));
-    ui->time_label->setText(QString::number(cur_time));
+    user->week = ui->week_spinbox->value();
+    user->day = ui->day_spinbox->value();
+    user->hour = ui->time_spinbox->value();
+    ui->week_label->setText(QString::number(user->week));
+    ui->day_label->setText(QString::number(user->day));
+    ui->time_label->setText(QString::number(user->hour));
     set_schedule();
 }
 void DataStructure_course_design::slot_time_st()
@@ -141,6 +179,7 @@ void DataStructure_course_design::slot_add_dairy()
 void DataStructure_course_design::member_init()
 {
     // 成员初始化, 内存分配
+    user = new user_information();
     my_debugger = new debug_label(this);
     my_navigation = new navigation_window(this);
     my_alarm = new alarm_window(this);
@@ -248,26 +287,42 @@ void DataStructure_course_design::get_course()
 
     connect(ui->my_schedule_table, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slot_click_cell(QTableWidgetItem *)));
     // 课程读取, 并将其显示在课程表中
-    QFile file_default_course("./data/default_course.txt");
-    if (!file_default_course.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        my_debugger->out("文件打开失败");
-    }
-    QTextStream default_course_in(&file_default_course);
-    default_course_in.setCodec("UTF-8");
+    // QFile file_default_course("./data/default_course.txt");
+    // if (!file_default_course.open(QIODevice::ReadOnly | QIODevice::Text))
+    // {
+    //     my_debugger->out("文件打开失败");
+    // }
+    // QTextStream default_course_in(&file_default_course);
+    // default_course_in.setCodec("UTF-8");
 
-    while (!default_course_in.atEnd())
+    // while (!default_course_in.atEnd())
+    // {
+    //     QString cur_course_name = default_course_in.readLine();
+    // if (courses.count(cur_course_name))
+    // {
+    //     for (auto week : (courses[cur_course_name])->course_weeks)
+    //     {
+    //         for (auto day : (courses[cur_course_name])->course_time)
+    //         {
+    //             for (auto time : day.second)
+    //             {
+    //                 schedule[week - 1][day.first - 1][time + 1] = cur_course_name;
+    //             }
+    //         }
+    //     }
+    // }
+    // }
+    for (auto course : user->courses)
     {
-        QString cur_course_name = default_course_in.readLine();
-        if (courses.count(cur_course_name))
+        if (courses.count(course))
         {
-            for (auto week : (courses[cur_course_name])->course_weeks)
+            for (auto week : (courses[course])->course_weeks)
             {
-                for (auto day : (courses[cur_course_name])->course_time)
+                for (auto day : (courses[course])->course_time)
                 {
                     for (auto time : day.second)
                     {
-                        schedule[week - 1][day.first - 1][time + 1] = cur_course_name;
+                        schedule[week - 1][day.first - 1][time + 1] = course;
                     }
                 }
             }
@@ -289,7 +344,7 @@ void DataStructure_course_design::set_schedule()
     {
         for (int j = 0; j < 15; j++)
         {
-            (ui->my_schedule_table->item(j, i))->setText(schedule[cur_week][i][j]);
+            (ui->my_schedule_table->item(j, i))->setText(schedule[user->week][i][j]);
         }
     }
 }

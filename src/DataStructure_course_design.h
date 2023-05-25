@@ -9,7 +9,6 @@
 #include "login_window.h"
 #include "showevent_window.h"
 #include "add_event_window.h"
-#include <QImage>
 #include <QFile>
 #include <QMessageBox>
 #include <QPushButton>
@@ -51,11 +50,13 @@ typedef struct event_information
     QString name;        // 活动名称
     QString site;        // 活动地点
     int week, day, hour; // 活动时间
-    EVENTTYPE type;
+    // EVENTTYPE type;
+
+    event_information(QString name, QString site, int week, int day, int hour) : name(name), site(site), week(week), day(day), hour(hour) {}
 } event_information;
 typedef struct user_information
 {
-    QString id;
+    QString id, password;
     int x, y;                                       // 当前坐标
     int week, day, hour;                            // 当前时间
     std::vector<QString> courses;                   // 所选课程
@@ -76,9 +77,7 @@ public:
 
     QTimer *my_timer;
 
-    int cur_week = 1;
-    int cur_day = 1;
-    int cur_time = 0;
+    user_information *user;
 
     std::map<QString, course_information *> courses;
     std::vector<std::vector<std::vector<QString>>> schedule;

@@ -11,18 +11,18 @@ login_window::login_window(QWidget *parent)
 
     QFile file("./data/id_n_password.txt");
     QFile idFile("./data/id_n_password.txt");
-    if (!idFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (idFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-    }
-    QTextStream idFileIn(&idFile);
-    idFileIn.setCodec("UTF-8"); // 确定编码格式
-    while (!idFileIn.atEnd())
-    {
-        QString id, password;
-        idFileIn >> id >> password;
-        if (id != QString("") && password != QString(""))
+        QTextStream idFileIn(&idFile);
+        idFileIn.setCodec("UTF-8"); // 确定编码格式
+        while (!idFileIn.atEnd())
         {
-            id2password[id] = password;
+            QString id, password;
+            idFileIn >> id >> password;
+            if (id != QString("") && password != QString(""))
+            {
+                id2password[id] = password;
+            }
         }
     }
     idFile.close();
@@ -31,15 +31,21 @@ login_window::login_window(QWidget *parent)
 login_window::~login_window()
 {
     QFile idFile("./data/id_n_password.txt");
-    if (!idFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    if (idFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QTextStream idFileIn(&idFile);
+        idFileIn.setCodec("UTF-8"); // 确定编码格式
+
+        for (auto iter : id2password)
+        {
+            idFileIn << iter.first << QString(" ");
+            idFileIn << iter.second << QString("\n");
+        }
+    }
+    else
     {
     }
-    QTextStream idFileIn(&idFile);
-    for (auto iter : id2password)
-    {
-        idFileIn << iter.first << QString(" ");
-        idFileIn << iter.second << QString("\n");
-    }
+
     idFile.close();
     delete ui;
 }
@@ -53,6 +59,48 @@ void login_window::slot_login_click()
     {
         if (id2password[in_id] == in_password)
         {
+            QString filename = in_id;
+
+            QFile file(QString("./data/") + filename);
+
+            // 打开文件并检查是否成功
+            if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                QTextStream fileIn(&file);
+                fileIn.setCodec("UTF-8"); // 确定编码格式
+                fileIn >> father->user->id >> father->user->password;
+                fileIn >> father->user->week >> father->user->day >> father->user->hour;
+                int course_num, dairy_num, tem_num;
+                fileIn >> course_num;
+                while (course_num--)
+                {
+                    QString t_course;
+                    fileIn >> t_course;
+                    father->user->courses.push_back(t_course);
+                }
+                fileIn >> dairy_num;
+                while (dairy_num--)
+                {
+                    QString name, site;
+                    int week, day, hour;
+                    fileIn >> name >> site >> week >> day >> hour;
+                    father->user->dairy_event.push_back({name, site, week, day, hour});
+                }
+                fileIn >> tem_num;
+                while (tem_num--)
+                {
+                    QString name, site;
+                    int week, day, hour;
+                    fileIn >> name >> site >> week >> day >> hour;
+                    father->user->temporary_event.push_back({name, site, week, day, hour});
+                }
+                file.close();
+            }
+            else
+            {
+                father->my_debugger->out("创建文件注册者文件失败");
+            }
+            father->get_course();
             father->show();
             close();
             father->my_timer->start(TIME_UNIT);
@@ -77,6 +125,7 @@ void login_window::slot_login_click()
         father->my_debugger->out("no this id");
     }
 }
+
 void login_window::slot_register_click()
 {
     QString in_id = ui->lineedit_id->text();
@@ -112,8 +161,9 @@ void login_window::slot_register_click()
         {
             QTextStream out(&file);
             out.setCodec("UTF-8"); // 确定编码格式
-            //  写入数据到文件
+            //   写入数据到文件
             out << in_id << " " << in_password << "\n";
+            out << QString("0 0 0\n");
             out << 12 << "\n"
                 << QString("计算机网络 ")
                 << QString("java ")
