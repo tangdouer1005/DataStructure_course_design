@@ -151,31 +151,31 @@ void DataStructure_course_design::slot_time_st()
     }
 }
 
-void DataStructure_course_design::slot_add_dairy()
-{
-    int week = my_add->ui->week_spinbox->value();
-    int day = my_add->ui->day_spinbox->value();
-    int time = my_add->ui->time_spinbox->value();
-    if (schedule[week - 1][day - 1][time - 6] == QString(""))
-    {
-        schedule[week][day - 1][time - 6] = QString(my_add->ui->event_line->text());
-        QMessageBox::information(this,
-                                 tr("提示"),
-                                 tr("添加成功"),
-                                 QMessageBox::Ok | QMessageBox::Cancel,
-                                 QMessageBox::Ok);
-        set_schedule();
-        my_add->close();
-    }
-    else
-    {
-        QMessageBox::information(this,
-                                 tr("提示"),
-                                 tr("该时间段已经被占用,请选择其他时间"),
-                                 QMessageBox::Ok | QMessageBox::Cancel,
-                                 QMessageBox::Ok);
-    }
-}
+// void DataStructure_course_design::slot_add_dairy()
+// {
+//     int week = my_add->ui->week_spinbox->value();
+//     int day = my_add->ui->day_spinbox->value();
+//     int time = my_add->ui->time_spinbox->value();
+//     if (schedule[week - 1][day - 1][time - 6] == QString(""))
+//     {
+//         schedule[week][day - 1][time - 6] = QString(my_add->ui->event_line->text());
+//         QMessageBox::information(this,
+//                                  tr("提示"),
+//                                  tr("添加成功"),
+//                                  QMessageBox::Ok | QMessageBox::Cancel,
+//                                  QMessageBox::Ok);
+//         set_schedule();
+//         my_add->close();
+//     }
+//     else
+//     {
+//         QMessageBox::information(this,
+//                                  tr("提示"),
+//                                  tr("该时间段已经被占用,请选择其他时间"),
+//                                  QMessageBox::Ok | QMessageBox::Cancel,
+//                                  QMessageBox::Ok);
+//     }
+// }
 void DataStructure_course_design::member_init()
 {
     // 成员初始化, 内存分配
@@ -202,7 +202,7 @@ void DataStructure_course_design::member_init()
     connect(ui->button_time_st, SIGNAL(clicked()), this, SLOT(slot_time_st()));
 
     connect(ui->button_add, SIGNAL(clicked()), my_add, SLOT(show()));
-    connect(my_add->ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_add_dairy()));
+    // connect(my_add->ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_add_dairy()));
     QSize size = my_navigation->ui->label_map->sizeHint(); // 获取自适应大小后的控件大小
     int width = size.width();                              // 获取控件的宽度
     int height = size.height();                            // 获取控件的高度
@@ -286,32 +286,6 @@ void DataStructure_course_design::get_course()
     }
 
     connect(ui->my_schedule_table, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slot_click_cell(QTableWidgetItem *)));
-    // 课程读取, 并将其显示在课程表中
-    // QFile file_default_course("./data/default_course.txt");
-    // if (!file_default_course.open(QIODevice::ReadOnly | QIODevice::Text))
-    // {
-    //     my_debugger->out("文件打开失败");
-    // }
-    // QTextStream default_course_in(&file_default_course);
-    // default_course_in.setCodec("UTF-8");
-
-    // while (!default_course_in.atEnd())
-    // {
-    //     QString cur_course_name = default_course_in.readLine();
-    // if (courses.count(cur_course_name))
-    // {
-    //     for (auto week : (courses[cur_course_name])->course_weeks)
-    //     {
-    //         for (auto day : (courses[cur_course_name])->course_time)
-    //         {
-    //             for (auto time : day.second)
-    //             {
-    //                 schedule[week - 1][day.first - 1][time + 1] = cur_course_name;
-    //             }
-    //         }
-    //     }
-    // }
-    // }
     for (auto course : user->courses)
     {
         if (courses.count(course))

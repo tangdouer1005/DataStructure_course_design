@@ -23,7 +23,7 @@
 #define TIME_UNIT 500
 
 class login_window;
-
+class add_event_window;
 typedef struct course_information
 {
     // 该课程的名字
@@ -89,6 +89,7 @@ public:
     void get_course();
     void set_schedule();
 
+    friend class add_event_window;
     friend class login_window;
 private slots:
 
@@ -96,7 +97,6 @@ private slots:
     void slot_timer_update();
     void slot_time_edit();
     void slot_time_st();
-    void slot_add_dairy();
 
 private:
     Ui_DataStructure_course_design *ui;
