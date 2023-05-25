@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SHOWEVENT_WINDOW_H
+#define SHOWEVENT_WINDOW_H
 #include "ui_showevent_window.h"
 #include <QMainWindow>
 
@@ -12,3 +13,4 @@ public:
 
     Ui_showevent_window *ui;
 };
+#endif

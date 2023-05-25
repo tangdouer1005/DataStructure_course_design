@@ -1,4 +1,6 @@
-#pragma once
+#ifndef NAVIGATION_WINDOW_H
+#define NAVIGATION_WINDOW_H
+
 #include "ui_navigation_window.h"
 #include <QMainWindow>
 #include <QImage>
@@ -13,3 +15,4 @@ public:
 
     Ui_navigation_window *ui;
 };
+#endif

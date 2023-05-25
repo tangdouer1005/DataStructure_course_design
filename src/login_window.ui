@@ -17,9 +17,9 @@
    <widget class="QPushButton" name="button_login">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>170</y>
-      <width>211</width>
+      <x>90</x>
+      <y>150</y>
+      <width>101</width>
       <height>41</height>
      </rect>
     </property>
@@ -27,37 +27,64 @@
      <string>login</string>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QPushButton" name="button_register">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>150</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>register</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineedit_password">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>110</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>40</y>
-      <width>331</width>
-      <height>141</height>
+      <y>110</y>
+      <width>51</width>
+      <height>31</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lineedit_password"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>密码</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>账号</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineedit_id"/>
-     </item>
-    </layout>
+    <property name="text">
+     <string>password</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineedit_id">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>80</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>80</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>id</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -66,7 +93,7 @@
      <x>0</x>
      <y>0</y>
      <width>404</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

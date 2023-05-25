@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ALARM_WINDOW_H
+#define ALARM_WINDOW_H
 #include "ui_alarm_window.h"
 #include <QMainWindow>
 
@@ -13,3 +14,4 @@ public:
 private:
     Ui_alarm_window *ui;
 };
+#endif

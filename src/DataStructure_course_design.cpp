@@ -3,7 +3,6 @@
 DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     : QMainWindow(parent), ui(new Ui_DataStructure_course_design)
 {
-    QApplication::setQuitOnLastWindowClosed(false);
     ui->setupUi(this);
     this->setFixedSize(1107, 637);
 
@@ -63,39 +62,6 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
             (my_showevent->ui->show_something)->append(final_exam_site);
         }
         my_showevent->show();
-    }
-}
-void DataStructure_course_design::slot_login()
-{
-    QString in_id = my_login->ui->lineedit_id->text();
-    QString in_password = my_login->ui->lineedit_password->text();
-
-    if (my_login->id2password.count(in_id))
-    {
-        if (my_login->id2password[in_id] == in_password)
-        {
-            show();
-            my_login->close();
-            my_timer->start(TIME_UNIT);
-        }
-        else
-        {
-            QMessageBox::information(this,
-                                     tr("wrong password"),
-                                     tr("请输入正确的password"),
-                                     QMessageBox::Ok | QMessageBox::Cancel,
-                                     QMessageBox::Ok);
-            my_debugger->out("wrong password");
-        }
-    }
-    else
-    {
-        QMessageBox::information(this,
-                                 tr("wrong id"),
-                                 tr("请输入正确的id"),
-                                 QMessageBox::Ok | QMessageBox::Cancel,
-                                 QMessageBox::Ok);
-        my_debugger->out("no this id");
     }
 }
 
@@ -180,7 +146,7 @@ void DataStructure_course_design::member_init()
     my_alarm = new alarm_window(this);
     my_login = new login_window(this);
     my_showevent = new showevent_window(this);
-    my_add = new add_dairy_event_window(this);
+    my_add = new add_event_window(this);
     my_timer = new QTimer(this);
     ui->my_schedule_table->setEditTriggers(QAbstractItemView::NoEditTriggers); // 课程表不可编辑设置
 
@@ -192,8 +158,6 @@ void DataStructure_course_design::member_init()
 
     connect(ui->button_edit_time, SIGNAL(clicked()), this, SLOT(slot_time_edit()));
     connect(my_timer, SIGNAL(timeout()), this, SLOT(slot_timer_update()));
-
-    connect((my_login->ui)->button_login, SIGNAL(clicked()), this, SLOT(slot_login()));
     connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
     connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
     connect(ui->button_time_st, SIGNAL(clicked()), this, SLOT(slot_time_st()));
