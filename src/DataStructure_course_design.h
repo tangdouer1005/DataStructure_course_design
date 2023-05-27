@@ -26,6 +26,7 @@
 class course_select_window;
 class login_window;
 class add_event_window;
+class alarm_window;
 typedef struct course_information
 {
     // 该课程的名字
@@ -94,6 +95,7 @@ public:
     friend class add_event_window;
     friend class login_window;
     friend class course_select_window;
+    friend class alarm_window;
 private slots:
 
     void slot_click_cell(QTableWidgetItem *);

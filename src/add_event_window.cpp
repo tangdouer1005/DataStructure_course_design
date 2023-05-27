@@ -56,10 +56,10 @@ void add_event_window::slot_click_confirm_button()
                                      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
             return;
         }
-        if (father->schedule[week][day - 1][time - 6] == QString("") ||
-            father->schedule[week][day - 1][time - 6] == QString("temporary"))
+        if (father->schedule[week - 1][day - 1][time - 6] == QString("") ||
+            father->schedule[week - 1][day - 1][time - 6] == QString("temporary"))
         {
-            father->schedule[week][day - 1][time - 6] = QString("temporary");
+            father->schedule[week - 1][day - 1][time - 6] = QString("temporary");
             father->user->temporary_event.push_back({ui->event_line->text(),
                                                      ui->site_line->text(),
                                                      week, day, time});
@@ -72,7 +72,7 @@ void add_event_window::slot_click_confirm_button()
         {
             QMessageBox::information(this,
                                      tr("提示"),
-                                     tr("该时间段已经被" + father->schedule[week][day - 1][time - 6].toUtf8() + "占用,推荐你选择其他时间"),
+                                     tr("该时间段已经被" + father->schedule[week - 1][day - 1][time - 6].toUtf8() + "占用,推荐你选择其他时间"),
                                      QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Ok);
         }
@@ -106,7 +106,13 @@ void add_event_window::slot_click_confirm_button()
                     father->schedule[w - 1][d - 1][time - 6] = ui->event_line->text();
                 }
             }
+            QMessageBox::information(this,
+                                     tr("提示"),
+                                     tr("事件添加成功"),
+                                     QMessageBox::Ok | QMessageBox::Cancel,
+                                     QMessageBox::Ok);
             father->set_schedule();
+            father->my_alarm->init_combo();
             return;
         }
         if (week == 0)
@@ -130,12 +136,18 @@ void add_event_window::slot_click_confirm_button()
             {
                 father->schedule[w - 1][day - 1][time - 6] = ui->event_line->text();
             }
+            QMessageBox::information(this,
+                                     tr("提示"),
+                                     tr("事件添加成功"),
+                                     QMessageBox::Ok | QMessageBox::Cancel,
+                                     QMessageBox::Ok);
             father->set_schedule();
+            father->my_alarm->init_combo();
             return;
         }
-        if (father->schedule[week][day - 1][time - 6] == QString(""))
+        if (father->schedule[week - 1][day - 1][time - 6] == QString(""))
         {
-            father->schedule[week][day - 1][time - 6] = ui->event_line->text();
+            father->schedule[week - 1][day - 1][time - 6] = ui->event_line->text();
             father->user->dairy_event.push_back({ui->event_line->text(),
                                                  ui->site_line->text(),
                                                  week, day, time});
@@ -143,8 +155,10 @@ void add_event_window::slot_click_confirm_button()
                                      tr("提示"),
                                      tr("添加成功"),
                                      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+            father->set_schedule();
+            father->my_alarm->init_combo();
         }
-        else if (father->schedule[week][day - 1][time - 6] == QString("temporary"))
+        else if (father->schedule[week - 1][day - 1][time - 6] == QString("temporary"))
         {
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this, "该时间段被临时事务占用", "你是否选择将其覆盖",
@@ -159,10 +173,12 @@ void add_event_window::slot_click_confirm_button()
                                                                         else
                                                                             return false; }),
                                                     father->user->temporary_event.end());
-                father->schedule[week][day - 1][time - 6] = ui->event_line->text();
+                father->schedule[week - 1][day - 1][time - 6] = ui->event_line->text();
                 father->user->dairy_event.push_back({ui->event_line->text(),
                                                      ui->site_line->text(),
                                                      week, day, time});
+                father->set_schedule();
+                father->my_alarm->init_combo();
                 QMessageBox::information(this,
                                          tr("提示"),
                                          tr("添加成功,原有的临时事务被删除"),
@@ -173,7 +189,7 @@ void add_event_window::slot_click_confirm_button()
                 std::vector<int> goodtime;
                 for (size_t i = 0; i < 16; i++)
                 {
-                    if (father->schedule[week][day - 1][i] == QString(""))
+                    if (father->schedule[week - 1][day - 1][i] == QString(""))
                     {
                         if (goodtime.size() == 3)
                         {
@@ -211,7 +227,7 @@ void add_event_window::slot_click_confirm_button()
             std::vector<int> goodtime;
             for (size_t i = 0; i < 16; i++)
             {
-                if (father->schedule[week][day - 1][i] == QString(""))
+                if (father->schedule[week - 1][day - 1][i] == QString(""))
                 {
                     if (goodtime.size() == 3)
                     {
@@ -248,5 +264,6 @@ void add_event_window::slot_click_confirm_button()
     {
         // wrong
     }
+    father->my_alarm->init_combo();
     father->set_schedule();
 }

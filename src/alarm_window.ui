@@ -6,48 +6,108 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>434</width>
-    <height>612</height>
+    <width>422</width>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="show_alarm">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>10</y>
-      <width>351</width>
-      <height>281</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>消息</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>嘀嘀嘀</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QListWidget" name="listWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>340</y>
-      <width>351</width>
+      <x>60</x>
+      <y>40</y>
+      <width>311</width>
       <height>192</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>闹钟</string>
-     </property>
-    </item>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>0</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;已存在闹钟&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="temporary_event_combo">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>260</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="add_temporary_button">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>260</y>
+      <width>75</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>添加</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>260</y>
+      <width>54</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>临时事务</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="dairy_event_combo">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>310</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>310</y>
+      <width>54</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>日常活动</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="add_dairy_button">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>310</y>
+      <width>75</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>添加</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -55,7 +115,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>434</width>
+     <width>422</width>
      <height>23</height>
     </rect>
    </property>

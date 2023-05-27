@@ -102,6 +102,7 @@ void login_window::slot_login_click()
             }
             father->get_course_event();
             close();
+            father->my_alarm->init_combo();
             if (father->user->week == 1 && father->user->day == 1 && father->user->hour == 0)
             {
                 father->my_select->init_combobox();
