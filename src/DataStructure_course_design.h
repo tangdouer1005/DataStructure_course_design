@@ -9,6 +9,7 @@
 #include "login_window.h"
 #include "showevent_window.h"
 #include "add_event_window.h"
+#include "course_select_window.h"
 #include <QFile>
 #include <QMessageBox>
 #include <QPushButton>
@@ -22,6 +23,7 @@
 
 #define TIME_UNIT 500
 
+class course_select_window;
 class login_window;
 class add_event_window;
 typedef struct course_information
@@ -40,11 +42,13 @@ typedef struct course_information
     QString exam_site_building;
     QString exam_site_room;
 } course_information;
+
 enum EVENTTYPE
 {
     DAILY,
     TEMPORARY
 };
+
 typedef struct event_information
 {
     QString name;        // 活动名称
@@ -54,6 +58,7 @@ typedef struct event_information
 
     event_information(QString name, QString site, int week, int day, int hour) : name(name), site(site), week(week), day(day), hour(hour) {}
 } event_information;
+
 typedef struct user_information
 {
     QString id, password;
@@ -63,6 +68,7 @@ typedef struct user_information
     std::vector<event_information> dairy_event;     // 日常课程储存
     std::vector<event_information> temporary_event; // 临时事务储存
 } user_information;
+
 class DataStructure_course_design : public QMainWindow
 {
     Q_OBJECT
@@ -74,7 +80,7 @@ public:
     login_window *my_login;
     showevent_window *my_showevent;
     add_event_window *my_add;
-
+    course_select_window *my_select;
     QTimer *my_timer;
 
     user_information *user;
@@ -91,6 +97,7 @@ public:
 
     friend class add_event_window;
     friend class login_window;
+    friend class course_select_window;
 private slots:
 
     void slot_click_cell(QTableWidgetItem *);

@@ -101,9 +101,17 @@ void login_window::slot_login_click()
                 father->my_debugger->out("创建文件注册者文件失败");
             }
             father->get_course();
-            father->show();
             close();
-            father->my_timer->start(TIME_UNIT);
+            if (father->user->week == 0 && father->user->day == 0 && father->user->hour == 0)
+            {
+                father->my_select->init_combobox();
+                father->my_select->show();
+            }
+            else
+            {
+                father->show();
+                father->my_timer->start(TIME_UNIT);
+            }
         }
         else
         {

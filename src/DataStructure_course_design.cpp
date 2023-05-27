@@ -151,31 +151,6 @@ void DataStructure_course_design::slot_time_st()
     }
 }
 
-// void DataStructure_course_design::slot_add_dairy()
-// {
-//     int week = my_add->ui->week_spinbox->value();
-//     int day = my_add->ui->day_spinbox->value();
-//     int time = my_add->ui->time_spinbox->value();
-//     if (schedule[week - 1][day - 1][time - 6] == QString(""))
-//     {
-//         schedule[week][day - 1][time - 6] = QString(my_add->ui->event_line->text());
-//         QMessageBox::information(this,
-//                                  tr("提示"),
-//                                  tr("添加成功"),
-//                                  QMessageBox::Ok | QMessageBox::Cancel,
-//                                  QMessageBox::Ok);
-//         set_schedule();
-//         my_add->close();
-//     }
-//     else
-//     {
-//         QMessageBox::information(this,
-//                                  tr("提示"),
-//                                  tr("该时间段已经被占用,请选择其他时间"),
-//                                  QMessageBox::Ok | QMessageBox::Cancel,
-//                                  QMessageBox::Ok);
-//     }
-// }
 void DataStructure_course_design::member_init()
 {
     // 成员初始化, 内存分配
@@ -186,6 +161,9 @@ void DataStructure_course_design::member_init()
     my_login = new login_window(this);
     my_showevent = new showevent_window(this);
     my_add = new add_event_window(this);
+
+    my_select = new course_select_window(this);
+
     my_timer = new QTimer(this);
     ui->my_schedule_table->setEditTriggers(QAbstractItemView::NoEditTriggers); // 课程表不可编辑设置
 

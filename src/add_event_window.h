@@ -1,5 +1,6 @@
 #ifndef ADD_EVENT_WINDOW_H
 #define ADD_EVENT_WINDOW_H
+
 #include "ui_add_event_window.h"
 #include <QMainWindow>
 #include "DataStructure_course_design.h"
