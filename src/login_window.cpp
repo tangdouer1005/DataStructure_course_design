@@ -82,7 +82,7 @@ void login_window::slot_login_click()
                 while (dairy_num--)
                 {
                     QString name, site;
-                    int week, day, hour;
+                    int week, day, hour, freq;
                     fileIn >> name >> site >> week >> day >> hour;
                     father->user->dairy_event.push_back({name, site, week, day, hour});
                 }
@@ -100,9 +100,9 @@ void login_window::slot_login_click()
             {
                 father->my_debugger->out("创建文件注册者文件失败");
             }
-            father->get_course();
+            father->get_course_event();
             close();
-            if (father->user->week == 0 && father->user->day == 0 && father->user->hour == 0)
+            if (father->user->week == 1 && father->user->day == 1 && father->user->hour == 0)
             {
                 father->my_select->init_combobox();
                 father->my_select->show();
@@ -141,21 +141,12 @@ void login_window::slot_register_click()
 
     if (id2password.count(in_id))
     {
-        if (id2password[in_id] == in_password)
-        {
-            father->show();
-            close();
-            father->my_timer->start(TIME_UNIT);
-        }
-        else
-        {
-            QMessageBox::information(this,
-                                     tr("wrong register"),
-                                     tr("此id已存在"),
-                                     QMessageBox::Ok | QMessageBox::Cancel,
-                                     QMessageBox::Ok);
-            father->my_debugger->out("id exit");
-        }
+        QMessageBox::information(this,
+                                 tr("wrong register"),
+                                 tr("此id已存在"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
+        father->my_debugger->out("id exit");
     }
     else
     {
@@ -171,7 +162,7 @@ void login_window::slot_register_click()
             out.setCodec("UTF-8"); // 确定编码格式
             //   写入数据到文件
             out << in_id << " " << in_password << "\n";
-            out << QString("0 0 0\n");
+            out << QString("1 1 0\n");
             out << 12 << "\n"
                 << QString("计算机网络 ")
                 << QString("java ")

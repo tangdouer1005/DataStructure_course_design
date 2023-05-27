@@ -48,14 +48,11 @@ enum EVENTTYPE
     DAILY,
     TEMPORARY
 };
-
 typedef struct event_information
 {
     QString name;        // 活动名称
     QString site;        // 活动地点
     int week, day, hour; // 活动时间
-    // EVENTTYPE type;
-
     event_information(QString name, QString site, int week, int day, int hour) : name(name), site(site), week(week), day(day), hour(hour) {}
 } event_information;
 
@@ -63,7 +60,7 @@ typedef struct user_information
 {
     QString id, password;
     int x, y;                                       // 当前坐标
-    int week, day, hour;                            // 当前时间
+    int week = 1, day = 1, hour = 0;                // 当前时间
     std::vector<QString> courses;                   // 所选课程
     std::vector<event_information> dairy_event;     // 日常课程储存
     std::vector<event_information> temporary_event; // 临时事务储存
@@ -92,9 +89,8 @@ public:
     ~DataStructure_course_design();
     void member_init();
     void read_course_information();
-    void get_course();
+    void get_course_event();
     void set_schedule();
-
     friend class add_event_window;
     friend class login_window;
     friend class course_select_window;

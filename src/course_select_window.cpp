@@ -47,13 +47,13 @@ void course_select_window::slot_click_confirm()
             {
                 for (auto time : day.second)
                 {
-                    if (father->schedule[week - 1][day.first - 1][time + 1] == QString(""))
+                    if (father->schedule[week - 1][day.first - 1][time - 1] == QString(""))
                     {
                     }
                     else
                     {
                         QMessageBox::information(this,
-                                                 tr("与课程" + father->schedule[week - 1][day.first - 1][time + 1].toUtf8() + "冲突"),
+                                                 tr("与课程" + father->schedule[week - 1][day.first - 1][time - 1].toUtf8() + "冲突"),
                                                  tr("在第" + QString::number(week).toUtf8() + "周周" + QString::number(day.first).toUtf8() + QString::number(time).toUtf8() + ":00"),
                                                  QMessageBox::Ok | QMessageBox::Cancel,
                                                  QMessageBox::Ok);
@@ -68,7 +68,7 @@ void course_select_window::slot_click_confirm()
                                  QMessageBox::Ok | QMessageBox::Cancel,
                                  QMessageBox::Ok);
         father->user->courses.push_back(name);
-        father->get_course();
+        father->get_course_event();
         father->set_schedule();
         course_remain.erase(name);
         // 处理schedule

@@ -6,10 +6,9 @@ add_event_window::add_event_window(QWidget *parent)
     ui->setupUi(this);
     this->setFixedSize(290, 339);
 
-    ui->week_spinbox->setRange(1, 18);
-    ui->day_spinbox->setRange(1, 7);
+    ui->week_spinbox->setRange(0, 18);
+    ui->day_spinbox->setRange(0, 7);
     ui->time_spinbox->setRange(6, 21);
-    // connect(my_add->ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_add_dairy()));
     connect(ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_click_confirm_button()));
 }
 
@@ -22,6 +21,15 @@ void add_event_window::slot_click_confirm_button()
     int week = ui->week_spinbox->value();
     int day = ui->day_spinbox->value();
     int time = ui->time_spinbox->value();
+    // 判断地点是否正确
+    if (0)
+    {
+        QMessageBox::information(this,
+                                 tr("错误"),
+                                 tr("不存在此地点"),
+                                 QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+        return;
+    }
     if (!ui->temporary_button->isChecked() && !ui->daily_button->isChecked())
     {
         QMessageBox::information(this,
@@ -32,18 +40,26 @@ void add_event_window::slot_click_confirm_button()
     else if (ui->temporary_button->isChecked())
     {
 
-        // 判断地点是否正确
-        if (0)
+        if (day == 0) // 每天都有
         {
             QMessageBox::information(this,
                                      tr("错误"),
-                                     tr("不存在此地点"),
+                                     tr("临时事务不可设置每天都有"),
                                      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+            return;
+        }
+        if (week == 0)
+        {
+            QMessageBox::information(this,
+                                     tr("错误"),
+                                     tr("临时事务不可设置每周都有"),
+                                     QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+            return;
         }
         if (father->schedule[week][day - 1][time - 6] == QString("") ||
             father->schedule[week][day - 1][time - 6] == QString("temporary"))
         {
-            father->schedule[week][day - 1][time - 6] = QString("temporary"); // QString(ui->event_line->text());
+            father->schedule[week][day - 1][time - 6] = QString("temporary");
             father->user->temporary_event.push_back({ui->event_line->text(),
                                                      ui->site_line->text(),
                                                      week, day, time});
@@ -63,9 +79,63 @@ void add_event_window::slot_click_confirm_button()
     }
     else if (ui->daily_button->isChecked())
     {
+        if (day == 0)
+        {
+            for (size_t w = 1; w <= 18; w++)
+            {
+                for (size_t d = 1; d <= 7; d++)
+                {
+                    if (father->schedule[w - 1][d - 1][time - 6] != QString(""))
+                    {
+                        QMessageBox::information(this,
+                                                 tr("提示"),
+                                                 tr("该时间段已经被" + father->schedule[w - 1][d - 1][time - 6].toUtf8() + "占用,建议你选择其他时间"),
+                                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                                 QMessageBox::Ok);
+                        return;
+                    }
+                }
+            }
+            father->user->dairy_event.push_back({ui->event_line->text(),
+                                                 ui->site_line->text(),
+                                                 week, day, time});
+            for (size_t w = 1; w <= 18; w++)
+            {
+                for (size_t d = 1; d <= 7; d++)
+                {
+                    father->schedule[w - 1][d - 1][time - 6] = ui->event_line->text();
+                }
+            }
+            father->set_schedule();
+            return;
+        }
+        if (week == 0)
+        {
+            for (size_t w = 1; w <= 18; w++)
+            {
+                if (father->schedule[w - 1][day - 1][time - 6] != QString(""))
+                {
+                    QMessageBox::information(this,
+                                             tr("提示"),
+                                             tr("该时间段已经被" + father->schedule[w - 1][day - 1][time - 6].toUtf8() + "占用,建议你选择其他时间"),
+                                             QMessageBox::Ok | QMessageBox::Cancel,
+                                             QMessageBox::Ok);
+                    return;
+                }
+            }
+            father->user->dairy_event.push_back({ui->event_line->text(),
+                                                 ui->site_line->text(),
+                                                 week, day, time});
+            for (size_t w = 1; w <= 18; w++)
+            {
+                father->schedule[w - 1][day - 1][time - 6] = ui->event_line->text();
+            }
+            father->set_schedule();
+            return;
+        }
         if (father->schedule[week][day - 1][time - 6] == QString(""))
         {
-            father->schedule[week][day - 1][time - 6] = ui->event_line->text(); // QString(ui->event_line->text());
+            father->schedule[week][day - 1][time - 6] = ui->event_line->text();
             father->user->dairy_event.push_back({ui->event_line->text(),
                                                  ui->site_line->text(),
                                                  week, day, time});
@@ -89,7 +159,7 @@ void add_event_window::slot_click_confirm_button()
                                                                         else
                                                                             return false; }),
                                                     father->user->temporary_event.end());
-                father->schedule[week][day - 1][time - 6] = ui->event_line->text(); // QString(ui->event_line->text());
+                father->schedule[week][day - 1][time - 6] = ui->event_line->text();
                 father->user->dairy_event.push_back({ui->event_line->text(),
                                                      ui->site_line->text(),
                                                      week, day, time});

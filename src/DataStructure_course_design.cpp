@@ -117,6 +117,7 @@ void DataStructure_course_design::slot_timer_update()
             set_schedule();
             if (user->week == 19)
             {
+                exit(0);
                 // 本学期结束, 删掉窗口
             }
         }
@@ -155,6 +156,7 @@ void DataStructure_course_design::member_init()
 {
     // 成员初始化, 内存分配
     user = new user_information();
+    user->week = 1, user->day = 1, user->hour = 0;
     my_debugger = new debug_label(this);
     my_navigation = new navigation_window(this);
     my_alarm = new alarm_window(this);
@@ -252,7 +254,7 @@ void DataStructure_course_design::read_course_information()
     }
 }
 
-void DataStructure_course_design::get_course()
+void DataStructure_course_design::get_course_event()
 {
     // 课程表初始化
     for (int i = 0; i < 15; i++)
@@ -274,11 +276,39 @@ void DataStructure_course_design::get_course()
                 {
                     for (auto time : day.second)
                     {
-                        schedule[week - 1][day.first - 1][time + 1] = course;
+                        schedule[week - 1][day.first - 1][time - 1] = course;
                     }
                 }
             }
         }
+    }
+    for (auto iter : user->dairy_event)
+    {
+        if (iter.day == 0)
+        {
+            for (size_t w = 1; w <= 18; w++)
+            {
+                for (size_t d = 1; d <= 7; d++)
+                {
+                    schedule[w - 1][d - 1][iter.hour - 6] = iter.name;
+                }
+            }
+        }
+        else if (iter.week == 0)
+        {
+            for (size_t w = 1; w <= 18; w++)
+            {
+                schedule[w - 1][iter.day - 1][iter.hour - 6] = iter.name;
+            }
+        }
+        else
+        {
+            schedule[iter.week - 1][iter.day - 1][iter.hour - 6] = iter.name;
+        }
+    }
+    for (auto iter : user->temporary_event)
+    {
+        schedule[iter.week - 1][iter.day - 1][iter.hour - 6] = QString("temporary");
     }
     set_schedule();
 }
@@ -296,7 +326,7 @@ void DataStructure_course_design::set_schedule()
     {
         for (int j = 0; j < 15; j++)
         {
-            (ui->my_schedule_table->item(j, i))->setText(schedule[user->week][i][j]);
+            (ui->my_schedule_table->item(j, i))->setText(schedule[user->week - 1][i][j]);
         }
     }
 }
