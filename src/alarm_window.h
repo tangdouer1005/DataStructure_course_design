@@ -13,7 +13,7 @@ public:
     alarm_window(QWidget *parent = nullptr);
     ~alarm_window();
     void init_combo();
-
+    void init_list();
     class DataStructure_course_design *father;
 
     std::set<QString> alarming_dairy_event;
@@ -24,5 +24,6 @@ private:
 private slots:
     void slot_click_dairy_button();
     void slot_click_temporary_button();
+    void slot_click_list(QListWidgetItem *content);
 };
 #endif

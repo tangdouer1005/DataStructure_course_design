@@ -52,6 +52,18 @@ DataStructure_course_design::~DataStructure_course_design()
                     << iter.day << " "
                     << iter.hour << "\n";
         }
+        fileOut << my_alarm->alarming_dairy_event.size() << "\n";
+        for (auto iter : my_alarm->alarming_dairy_event)
+        {
+            fileOut << iter << " ";
+        }
+
+        fileOut << "\n"
+                << my_alarm->alarming_temporary_event.size() << "\n";
+        for (auto iter : my_alarm->alarming_temporary_event)
+        {
+            fileOut << iter << " ";
+        }
         file.close();
     }
     delete ui;
@@ -122,6 +134,38 @@ void DataStructure_course_design::slot_timer_update()
             }
         }
     }
+    if (user->hour >= 6 && user->hour <= 21)
+    {
+        if (my_alarm->alarming_dairy_event.count(schedule[user->week - 1][user->day - 1][user->hour - 6]))
+        {
+            QMessageBox::information(this,
+                                     tr("日常活动闹钟"),
+                                     tr(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8()),
+                                     QMessageBox::Ok | QMessageBox::Cancel,
+                                     QMessageBox::Ok);
+        }
+        if (schedule[user->week - 1][user->day - 1][user->hour - 6] == QString("temporary"))
+        {
+            QString some = QString("");
+            auto tem = find_tem(user->week, user->day, user->hour);
+            for (auto iter : tem)
+            {
+                if (my_alarm->alarming_temporary_event.count(iter))
+                {
+                    some += iter + " ";
+                }
+            }
+            if (some != QString(""))
+            {
+                QMessageBox::information(this,
+                                         tr("临时事务闹钟"),
+                                         tr(some.toUtf8()),
+                                         QMessageBox::Ok | QMessageBox::Cancel,
+                                         QMessageBox::Ok);
+            }
+        }
+    }
+
     ui->week_label->setText(QString::number(user->week));
     ui->day_label->setText(QString::number(user->day));
     ui->time_label->setText(QString::number(user->hour));
@@ -329,4 +373,17 @@ void DataStructure_course_design::set_schedule()
             (ui->my_schedule_table->item(j, i))->setText(schedule[user->week - 1][i][j]);
         }
     }
+}
+
+std::vector<QString> DataStructure_course_design::find_tem(int week, int day, int time)
+{
+    std::vector<QString> tem;
+    for (auto iter : user->temporary_event)
+    {
+        if (iter.week == week && iter.day == day && iter.hour == time)
+        {
+            tem.push_back(iter.name);
+        }
+    }
+    return tem;
 }

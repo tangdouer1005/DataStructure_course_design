@@ -70,7 +70,7 @@ void login_window::slot_login_click()
                 fileIn.setCodec("UTF-8"); // 确定编码格式
                 fileIn >> father->user->id >> father->user->password;
                 fileIn >> father->user->week >> father->user->day >> father->user->hour;
-                int course_num, dairy_num, tem_num;
+                int course_num, dairy_num, tem_num, alarm_dairy, alarm_tem;
                 fileIn >> course_num;
                 while (course_num--)
                 {
@@ -94,6 +94,22 @@ void login_window::slot_login_click()
                     fileIn >> name >> site >> week >> day >> hour;
                     father->user->temporary_event.push_back({name, site, week, day, hour});
                 }
+                fileIn >> alarm_dairy;
+                while (alarm_dairy--)
+                {
+                    QString name;
+                    fileIn >> name;
+                    father->my_alarm->alarming_dairy_event.insert(name);
+                }
+                fileIn >> alarm_tem;
+                while (alarm_tem--)
+                {
+                    QString name;
+                    fileIn >> name;
+                    father->my_alarm->alarming_temporary_event.insert(name);
+                }
+                father->my_alarm->init_list();
+
                 file.close();
             }
             else
@@ -178,6 +194,7 @@ void login_window::slot_register_click()
                 << QString("计算计组成原理实验 ")
                 << QString("数据结构课程设计 ");
             out << "\n0 0"; // 日常事务和临时事务
+            out << "\n0 0"; // 日常闹钟,临时闹钟
             // 关闭文件
             file.close();
         }
