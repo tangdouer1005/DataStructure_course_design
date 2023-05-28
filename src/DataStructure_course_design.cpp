@@ -134,6 +134,30 @@ void DataStructure_course_design::slot_timer_update()
             }
         }
     }
+    if (user->hour == 22)
+    {
+        QString c = "";
+        std::set<QString> tmp;
+        for (size_t i = 6; i <= 21; i++)
+        {
+            if (courses.count(schedule[user->week - 1][user->day % 7][i - 6]))
+            {
+                tmp.insert(schedule[user->week - 1][user->day % 7][i - 6]);
+            }
+        }
+        if (tmp.size())
+        {
+            for (auto iter : tmp)
+            {
+                c += iter + "\n";
+            }
+            QMessageBox::information(this,
+                                     tr("明天的课程有"),
+                                     tr(c.toUtf8()),
+                                     QMessageBox::Ok | QMessageBox::Cancel,
+                                     QMessageBox::Ok);
+        }
+    }
     if (user->hour >= 6 && user->hour <= 21)
     {
         if (my_alarm->alarming_dairy_event.count(schedule[user->week - 1][user->day - 1][user->hour - 6]))
