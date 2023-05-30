@@ -14,6 +14,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QString>
+#include <QPainter>
 #include <QTextStream>
 #include <QTextCodec>
 #include <QTimer>
@@ -22,7 +23,7 @@
 #include <map>
 #include <algorithm>
 #define TIME_UNIT 500
-
+class navigation_window;
 class course_select_window;
 class login_window;
 class add_event_window;
@@ -92,7 +93,7 @@ public:
     void read_course_information();
     void get_course_event();
     void set_schedule();
-    std::vector<QString> find_tem(int week, int day, int time);
+    std::vector<event_information> find_tem(int week, int day, int time);
     friend class add_event_window;
     friend class login_window;
     friend class course_select_window;

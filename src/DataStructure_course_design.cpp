@@ -172,13 +172,20 @@ void DataStructure_course_design::slot_timer_update()
         {
             QString some = QString("");
             auto tem = find_tem(user->week, user->day, user->hour);
+            std::vector<QString> site;
+            site.push_back(QString("学五公寓"));
+            my_navigation->ui->list_agenda->clear();
             for (auto iter : tem)
             {
-                if (my_alarm->alarming_temporary_event.count(iter))
+                if (my_alarm->alarming_temporary_event.count(iter.name))
                 {
-                    some += iter + " ";
+                    some += iter.name + " ";
+                    site.push_back(iter.site);
+                    my_navigation->ui->list_agenda->addItem(iter.site.toUtf8() + " " + iter.name.toUtf8());
                 }
             }
+            my_navigation->find_shortest_path(site);
+            my_navigation->show();
             if (some != QString(""))
             {
                 QMessageBox::information(this,
@@ -186,6 +193,18 @@ void DataStructure_course_design::slot_timer_update()
                                          tr(some.toUtf8()),
                                          QMessageBox::Ok | QMessageBox::Cancel,
                                          QMessageBox::Ok);
+            }
+        }
+        if (courses.count(schedule[user->week - 1][user->day - 1][user->hour - 6]))
+        {
+            if (user->hour - 6 - 1 >= 0 && schedule[user->week - 1][user->day - 1][user->hour - 6] == schedule[user->week - 1][user->day - 1][user->hour - 6 - 1])
+                break;
+            else
+            {
+                my_navigation->ui->list_agenda->clear();
+                my_navigation->ui->list_agenda->addItem(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8() + " " + courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->exam_site_building.toUtf8());
+                my_navigation->shortestPath(QString("学五公寓"), courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->exam_site_building);
+                my_navigation->show();
             }
         }
     }
@@ -274,6 +293,8 @@ void DataStructure_course_design::read_course_information()
     {
         course_information *tmp_ci = new course_information;
         course_in >> tmp_ci->name;
+        if (tmp_ci->name == QString(""))
+            break;
         int count_course;
         course_in >> count_course;
         while (count_course--)
@@ -307,8 +328,8 @@ void DataStructure_course_design::read_course_information()
                 (tmp_ci->course_weeks).push_back(t_c);
             }
         }
-        course_in.readLine();
-        tmp_ci->course_site_building = course_in.readLine();
+        course_in >> tmp_ci->course_site_building;
+        course_in >> tmp_ci->course_site_room;
         int exam_last;
         int exam_begin;
         course_in >> (tmp_ci->exam_time).first >> exam_begin >> exam_last;
@@ -316,8 +337,8 @@ void DataStructure_course_design::read_course_information()
         {
             (tmp_ci->exam_time).second.push_back(exam_begin + i);
         }
-        course_in.readLine();
-        tmp_ci->exam_site_building = course_in.readLine();
+        course_in >> tmp_ci->exam_site_building;
+        course_in >> tmp_ci->exam_site_room;
         courses.insert({tmp_ci->name, tmp_ci});
     }
 }
@@ -399,14 +420,14 @@ void DataStructure_course_design::set_schedule()
     }
 }
 
-std::vector<QString> DataStructure_course_design::find_tem(int week, int day, int time)
+std::vector<event_information> DataStructure_course_design::find_tem(int week, int day, int time)
 {
-    std::vector<QString> tem;
+    std::vector<event_information> tem;
     for (auto iter : user->temporary_event)
     {
         if (iter.week == week && iter.day == day && iter.hour == time)
         {
-            tem.push_back(iter.name);
+            tem.push_back(iter);
         }
     }
     return tem;

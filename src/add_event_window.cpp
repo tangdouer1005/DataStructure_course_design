@@ -22,7 +22,7 @@ void add_event_window::slot_click_confirm_button()
     int day = ui->day_spinbox->value();
     int time = ui->time_spinbox->value();
     // 判断地点是否正确
-    if (0)
+    if (!(father->my_navigation->name_to_node.count(ui->site_line->text())))
     {
         QMessageBox::information(this,
                                  tr("错误"),

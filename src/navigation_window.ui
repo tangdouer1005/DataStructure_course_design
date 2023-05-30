@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1008</width>
+    <width>1010</width>
     <height>763</height>
    </rect>
   </property>
@@ -30,60 +30,79 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="search_line">
+   <widget class="QLineEdit" name="start">
     <property name="geometry">
      <rect>
-      <x>16</x>
-      <y>40</y>
-      <width>271</width>
-      <height>51</height>
+      <x>60</x>
+      <y>60</y>
+      <width>231</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>这是搜索框</string>
+     <string/>
     </property>
    </widget>
    <widget class="QListWidget" name="list_agenda">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>280</y>
       <width>321</width>
-      <height>571</height>
+      <height>441</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>我来鹅城只办三件事!</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>公平!</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>公平!</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>还是他妈的! 公平!</string>
-     </property>
-    </item>
    </widget>
-   <widget class="QPushButton" name="button_search">
+   <widget class="QPushButton" name="button_navigation">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>40</y>
-      <width>61</width>
+      <x>50</x>
+      <y>170</y>
+      <width>221</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>搜索</string>
+     <string>导航</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="end">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>110</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>54</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>终点:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>54</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>起点:</string>
     </property>
    </widget>
   </widget>
@@ -92,7 +111,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1008</width>
+     <width>1010</width>
      <height>23</height>
     </rect>
    </property>
