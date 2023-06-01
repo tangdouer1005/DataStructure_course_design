@@ -199,7 +199,7 @@ void DataStructure_course_design::slot_timer_update()
         {
             if (user->hour - 6 - 1 >= 0 && schedule[user->week - 1][user->day - 1][user->hour - 6] == schedule[user->week - 1][user->day - 1][user->hour - 6 - 1])
             {
-                        }
+            }
             else
             {
                 my_navigation->ui->list_agenda->clear();
