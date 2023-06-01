@@ -198,11 +198,13 @@ void DataStructure_course_design::slot_timer_update()
         if (courses.count(schedule[user->week - 1][user->day - 1][user->hour - 6]))
         {
             if (user->hour - 6 - 1 >= 0 && schedule[user->week - 1][user->day - 1][user->hour - 6] == schedule[user->week - 1][user->day - 1][user->hour - 6 - 1])
-                break;
+            {
+                        }
             else
             {
                 my_navigation->ui->list_agenda->clear();
                 my_navigation->ui->list_agenda->addItem(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8() + " " + courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->exam_site_building.toUtf8());
+                my_navigation->clean_label();
                 my_navigation->shortestPath(QString("学五公寓"), courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->exam_site_building);
                 my_navigation->show();
             }
