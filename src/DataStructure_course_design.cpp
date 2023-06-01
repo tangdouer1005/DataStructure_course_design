@@ -4,7 +4,7 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     : QMainWindow(parent), ui(new Ui_DataStructure_course_design)
 {
     ui->setupUi(this);
-    this->setFixedSize(1107, 637);
+    this->setFixedSize(1140, 668);
 
     member_init();
     read_course_information();
@@ -15,8 +15,7 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
 
 DataStructure_course_design::~DataStructure_course_design()
 {
-    QFile file(QString("./data/") + user->id);
-
+    QFile file(QString("./data/users/") + user->id);
     // 打开文件并检查是否成功
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -25,14 +24,12 @@ DataStructure_course_design::~DataStructure_course_design()
 
         fileOut << user->id << " " << user->password << "\n";
         fileOut << user->week << " " << user->day << " " << user->hour << "\n";
-
         fileOut << user->courses.size() << "\n";
         for (auto iter : user->courses)
         {
             fileOut << iter << QString(" ");
         }
         fileOut << "\n";
-
         fileOut << user->dairy_event.size() << "\n";
         for (auto iter : user->dairy_event)
         {
@@ -66,22 +63,56 @@ DataStructure_course_design::~DataStructure_course_design()
         }
         file.close();
     }
+    QFile logfile(QString("./data/log/") + user->id);
+    // 打开文件并检查是否成功
+    if (logfile.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream fileOut(&logfile);
+        fileOut.setCodec("UTF-8");                        // 确定编码格式
+        QString text = my_debugger->label->toPlainText(); // 获取 QTextBrowser 控件中的文本
+        fileOut << text;
+    }
     delete ui;
 }
 void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
 {
     if (item->text() != QString(""))
     {
-
         (my_showevent->ui->show_something)->clear();
         if (!courses.count(item->text()))
         {
-            (my_showevent->ui->show_something)->append("这是一个日常事务");
+            if (item->text() == QString("temporary"))
+            {
+                (my_showevent->ui->show_something)->append("临时事务");
+                my_debugger->out("临时事务查询");
+            }
+            else
+            {
+                for (auto iter : user->dairy_event)
+                {
+                    if (item->text() == iter.name)
+                    {
+                        (my_showevent->ui->show_something)->append("日常活动 " + iter.name);
+                        if (iter.day == 0)
+                        {
+                            (my_showevent->ui->show_something)->append("时间:每天" + QString::number(iter.hour) + ":00");
+                        }
+                        else if (iter.week == 0)
+                        {
+                            (my_showevent->ui->show_something)->append("时间:每周周" + QString::number(iter.day) + " " + QString::number(iter.hour) + ":00");
+                        }
+                        else
+                        {
+                            (my_showevent->ui->show_something)->append("时间:第" + QString::number(iter.week) + "周周" + QString::number(iter.day) + " " + QString::number(iter.hour) + ":00");
+                        }
+                        (my_showevent->ui->show_something)->append("地点 " + iter.site);
+                    }
+                }
+            }
         }
         else
         {
             auto this_course = courses[item->text()];
-            // my_debugger->out(this_course -> );
             QString week = QString("上课周数: ");
             for (auto iter : this_course->course_weeks)
             {
@@ -110,7 +141,9 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
             (my_showevent->ui->show_something)->append(time);
             (my_showevent->ui->show_something)->append(final_exam_time);
             (my_showevent->ui->show_something)->append(final_exam_site);
+            my_debugger->out("课程查询" + item->text());
         }
+        stop();
         my_showevent->show();
     }
 }
@@ -151,11 +184,13 @@ void DataStructure_course_design::slot_timer_update()
             {
                 c += iter + "\n";
             }
+            stop();
             QMessageBox::information(this,
                                      tr("明天的课程有"),
                                      tr(c.toUtf8()),
                                      QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Ok);
+            my_debugger->out("第二天课程提醒: week " + QString::number(user->week) + "day " + QString::number(user->day) + "time " + QString::number(user->day));
         }
     }
     if (user->hour >= 6 && user->hour <= 21)
@@ -167,6 +202,27 @@ void DataStructure_course_design::slot_timer_update()
                                      tr(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8()),
                                      QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Ok);
+            my_debugger->out("日常活动闹钟: week " + QString::number(user->week) + "day " + QString::number(user->day) + "time " + QString::number(user->day));
+            QString site = "";
+            for (auto iter : user->dairy_event)
+            {
+                if (iter.name == schedule[user->week - 1][user->day - 1][user->hour - 6])
+                {
+                    site = iter.site;
+                }
+            }
+            if (site == QString(""))
+            {
+                QMessageBox::information(this,
+                                         tr("没找到这个地点"),
+                                         tr("rt"),
+                                         QMessageBox::Ok | QMessageBox::Cancel,
+                                         QMessageBox::Ok);
+            }
+            my_navigation->clean_label();
+            my_navigation->shortestPath(QString("学五公寓"), site);
+            stop();
+            my_navigation->show();
         }
         if (schedule[user->week - 1][user->day - 1][user->hour - 6] == QString("temporary"))
         {
@@ -185,6 +241,7 @@ void DataStructure_course_design::slot_timer_update()
                 }
             }
             my_navigation->find_shortest_path(site);
+            stop();
             my_navigation->show();
             if (some != QString(""))
             {
@@ -193,6 +250,7 @@ void DataStructure_course_design::slot_timer_update()
                                          tr(some.toUtf8()),
                                          QMessageBox::Ok | QMessageBox::Cancel,
                                          QMessageBox::Ok);
+                my_debugger->out("临时事务闹钟: week " + QString::number(user->week) + "day " + QString::number(user->day) + "time " + QString::number(user->day));
             }
         }
         if (courses.count(schedule[user->week - 1][user->day - 1][user->hour - 6]))
@@ -202,11 +260,18 @@ void DataStructure_course_design::slot_timer_update()
             }
             else
             {
+                QMessageBox::information(this,
+                                         tr("上课闹钟"),
+                                         tr(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8()),
+                                         QMessageBox::Ok | QMessageBox::Cancel,
+                                         QMessageBox::Ok);
                 my_navigation->ui->list_agenda->clear();
                 my_navigation->ui->list_agenda->addItem(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8() + " " + courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->exam_site_building.toUtf8());
                 my_navigation->clean_label();
-                my_navigation->shortestPath(QString("学五公寓"), courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->exam_site_building);
+                my_navigation->shortestPath(QString("学五公寓"), courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->course_site_building);
+                stop();
                 my_navigation->show();
+                my_debugger->out("上课临近提醒闹钟: week " + QString::number(user->week) + "day " + QString::number(user->day) + "time " + QString::number(user->day));
             }
         }
     }
@@ -214,7 +279,6 @@ void DataStructure_course_design::slot_timer_update()
     ui->week_label->setText(QString::number(user->week));
     ui->day_label->setText(QString::number(user->day));
     ui->time_label->setText(QString::number(user->hour));
-    // my_debugger->out(QString::number(user->week) + " " + QString::number(user->day) + " " + QString::number(user->hour));
 }
 
 void DataStructure_course_design::slot_time_edit()
@@ -232,15 +296,30 @@ void DataStructure_course_design::slot_time_st()
     if (ui->button_time_st->text() == QString("停止"))
     {
         ui->button_time_st->setText("开始");
+        my_debugger->out("时间暂停");
         my_timer->stop();
     }
     else
     {
         ui->button_time_st->setText("停止");
+        my_debugger->out("时间开始");
         my_timer->start(TIME_UNIT);
     }
 }
 
+void DataStructure_course_design::init_log()
+{
+    QFile file_course("./data/log/" + user->id);
+    if (!file_course.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+    }
+    QTextStream course_in(&file_course);
+    course_in.setCodec("UTF-8"); // 确定编码格式
+    while (!course_in.atEnd())
+    {
+        my_debugger->out(course_in.readLine());
+    }
+}
 void DataStructure_course_design::member_init()
 {
     // 成员初始化, 内存分配
@@ -252,7 +331,7 @@ void DataStructure_course_design::member_init()
     my_login = new login_window(this);
     my_showevent = new showevent_window(this);
     my_add = new add_event_window(this);
-
+    my_manager = new manager_window(this);
     my_select = new course_select_window(this);
 
     my_timer = new QTimer(this);
@@ -266,17 +345,18 @@ void DataStructure_course_design::member_init()
 
     connect(ui->button_edit_time, SIGNAL(clicked()), this, SLOT(slot_time_edit()));
     connect(my_timer, SIGNAL(timeout()), this, SLOT(slot_timer_update()));
-    connect(ui->button_navigation, SIGNAL(clicked()), my_navigation, SLOT(show()));
-    connect(ui->button_alarmclock, SIGNAL(clicked()), my_alarm, SLOT(show()));
+    connect(ui->button_navigation, &QPushButton::clicked, [=]()
+            {my_navigation->show();stop(); });
+    connect(ui->button_alarmclock, &QPushButton::clicked, [=]()
+            {my_alarm->show();stop(); });
     connect(ui->button_time_st, SIGNAL(clicked()), this, SLOT(slot_time_st()));
 
-    connect(ui->button_add, SIGNAL(clicked()), my_add, SLOT(show()));
+    connect(ui->button_add, &QPushButton::clicked, [=]()
+            {my_add->show();stop(); });
     // connect(my_add->ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_add_dairy()));
     QSize size = my_navigation->ui->label_map->sizeHint(); // 获取自适应大小后的控件大小
     int width = size.width();                              // 获取控件的宽度
     int height = size.height();                            // 获取控件的高度
-    my_debugger->out(QString::number(width));
-    my_debugger->out(QString::number(height));
 }
 void DataStructure_course_design::read_course_information()
 {
@@ -286,7 +366,11 @@ void DataStructure_course_design::read_course_information()
     QFile file_course("./data/course.txt");
     if (!file_course.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        my_debugger->out("文件打开失败");
+        QMessageBox::information(this,
+                                 tr("wrong"),
+                                 tr("./data/course.txt打开失败"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
     }
     QTextStream course_in(&file_course);
     course_in.setCodec("UTF-8"); // 确定编码格式
@@ -342,6 +426,73 @@ void DataStructure_course_design::read_course_information()
         course_in >> tmp_ci->exam_site_building;
         course_in >> tmp_ci->exam_site_room;
         courses.insert({tmp_ci->name, tmp_ci});
+    }
+    QFile file_man("./data/manager");
+    if (file_man.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QTextStream file_man_in(&file_man);
+        file_man_in.setCodec("UTF-8"); // 确定编码格式
+        while (!course_in.atEnd())
+        {
+            QString type;
+            QString name, day, time, num, site, room, exam_site, exam_room;
+            file_man_in >> type >> name >> day >> time >> num >> site >> room >> exam_site >> exam_room;
+            if (type == QString("0"))
+            {
+                course_information *tmp_ci = new course_information;
+                tmp_ci->name = name;
+                for (int i = 1; i <= 18; i++)
+                {
+                    tmp_ci->course_weeks.push_back(i);
+                }
+                tmp_ci->course_time.push_back({day.toInt(), std::vector<int>(1, time.toInt())});
+                for (int i = 1; i < num.toInt(); i++)
+                {
+                    tmp_ci->course_time[0].second.push_back(time.toInt() + i);
+                }
+                tmp_ci->exam_week = 18;
+                tmp_ci->exam_time = tmp_ci->course_time[0];
+                tmp_ci->course_site_building = site;
+                tmp_ci->course_site_room = room;
+                tmp_ci->exam_site_building = exam_site;
+                tmp_ci->exam_site_room = exam_room;
+                courses.insert({name, tmp_ci});
+            }
+            else if (type == QString("1"))
+            {
+                course_information *tmp_ci = courses[name];
+                tmp_ci->course_weeks.clear();
+                tmp_ci->course_time.clear();
+                tmp_ci->exam_time.second.clear();
+                tmp_ci->name = name;
+                for (int i = 1; i <= 18; i++)
+                {
+                    tmp_ci->course_weeks.push_back(i);
+                }
+                tmp_ci->course_time.push_back({day.toInt(), std::vector<int>(1, time.toInt())});
+                for (int i = 1; i < num.toInt(); i++)
+                {
+                    tmp_ci->course_time[0].second.push_back(time.toInt() + i);
+                }
+                tmp_ci->exam_week = 18;
+                tmp_ci->exam_time = tmp_ci->course_time[0];
+                tmp_ci->course_site_building = site;
+                tmp_ci->course_site_room = room;
+                tmp_ci->exam_site_building = exam_site;
+                tmp_ci->exam_site_room = exam_room;
+            }
+            else
+            {
+            }
+        }
+    }
+    else
+    {
+        QMessageBox::information(this,
+                                 tr("wrong"),
+                                 tr("./data/manager打开失败"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
     }
 }
 

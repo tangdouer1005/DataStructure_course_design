@@ -10,6 +10,7 @@
 #include "showevent_window.h"
 #include "add_event_window.h"
 #include "course_select_window.h"
+#include "manager_window.h"
 #include <QFile>
 #include <QMessageBox>
 #include <QPushButton>
@@ -28,6 +29,7 @@ class course_select_window;
 class login_window;
 class add_event_window;
 class alarm_window;
+class manager_window;
 typedef struct course_information
 {
     // 该课程的名字
@@ -80,6 +82,7 @@ public:
     showevent_window *my_showevent;
     add_event_window *my_add;
     course_select_window *my_select;
+    manager_window *my_manager;
     QTimer *my_timer;
 
     user_information *user;
@@ -90,14 +93,21 @@ public:
     DataStructure_course_design(QWidget *parent = nullptr);
     ~DataStructure_course_design();
     void member_init();
+    void init_log();
     void read_course_information();
     void get_course_event();
     void set_schedule();
+    void stop()
+    {
+        my_timer->stop();
+        ui->button_time_st->setText("开始");
+    };
     std::vector<event_information> find_tem(int week, int day, int time);
     friend class add_event_window;
     friend class login_window;
     friend class course_select_window;
     friend class alarm_window;
+    friend class manager_window;
 private slots:
 
     void slot_click_cell(QTableWidgetItem *);

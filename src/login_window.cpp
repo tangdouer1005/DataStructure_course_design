@@ -55,13 +55,51 @@ void login_window::slot_login_click()
     QString in_id = ui->lineedit_id->text();
     QString in_password = ui->lineedit_password->text();
 
+    if (!ui->user_radio->isChecked() && !ui->manager_radio->isChecked())
+    {
+        QMessageBox::information(this,
+                                 tr("wrong"),
+                                 tr("请选择一种登录方式"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
+        return;
+    }
+    if (ui->manager_radio->isChecked())
+    {
+        if (in_id == QString("houge"))
+        {
+            if (in_password == QString("hhhhh"))
+            {
+                father->my_manager->show();
+                this->hide();
+                return;
+            }
+            else
+            {
+                QMessageBox::information(this,
+                                         tr("wrong password"),
+                                         tr("请输入正确的password"),
+                                         QMessageBox::Ok | QMessageBox::Cancel,
+                                         QMessageBox::Ok);
+            }
+        }
+        else
+        {
+            QMessageBox::information(this,
+
+                                     tr("wrong id"),
+                                     tr("请输入正确的id"),
+                                     QMessageBox::Ok | QMessageBox::Cancel,
+                                     QMessageBox::Ok);
+        }
+    }
     if (id2password.count(in_id))
     {
         if (id2password[in_id] == in_password)
         {
             QString filename = in_id;
 
-            QFile file(QString("./data/") + filename);
+            QFile file(QString("./data/users/") + filename);
 
             // 打开文件并检查是否成功
             if (file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -114,7 +152,6 @@ void login_window::slot_login_click()
             }
             else
             {
-                father->my_debugger->out("创建文件注册者文件失败");
             }
             father->get_course_event();
             close();
@@ -129,6 +166,8 @@ void login_window::slot_login_click()
                 father->show();
                 father->my_timer->start(TIME_UNIT);
             }
+            father->init_log();
+            father->my_debugger->out("登陆成功 id:" + in_id);
         }
         else
         {
@@ -137,7 +176,6 @@ void login_window::slot_login_click()
                                      tr("请输入正确的password"),
                                      QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Ok);
-            father->my_debugger->out("wrong password");
         }
     }
     else
@@ -147,7 +185,6 @@ void login_window::slot_login_click()
                                  tr("此id不存在"),
                                  QMessageBox::Ok | QMessageBox::Cancel,
                                  QMessageBox::Ok);
-        father->my_debugger->out("no this id");
     }
 }
 
@@ -163,14 +200,13 @@ void login_window::slot_register_click()
                                  tr("此id已存在"),
                                  QMessageBox::Ok | QMessageBox::Cancel,
                                  QMessageBox::Ok);
-        father->my_debugger->out("id exit");
     }
     else
     {
         id2password[in_id] = in_password;
         QString filename = in_id;
         id2password.insert({in_id, in_password});
-        QFile file(QString("./data/") + filename);
+        QFile file(QString("./data/users/") + filename);
 
         // 打开文件并检查是否成功
         if (file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -200,13 +236,12 @@ void login_window::slot_register_click()
         }
         else
         {
-            father->my_debugger->out("创建文件注册者文件失败");
         }
         QMessageBox::information(this,
                                  tr("succeed register"),
                                  tr("注册成功"),
                                  QMessageBox::Ok | QMessageBox::Cancel,
                                  QMessageBox::Ok);
-        father->my_debugger->out("register id");
+        father->my_debugger->out("账号注册成功 id:" + in_id.toUtf8() + " password:" + in_password.toUtf8());
     }
 }

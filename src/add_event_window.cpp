@@ -67,6 +67,7 @@ void add_event_window::slot_click_confirm_button()
                                      tr("提示"),
                                      tr("添加成功"),
                                      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+            father->my_debugger->out("临时事务添加成功: name:" + ui->event_line->text() + " site:" + ui->site_line->text() + " week:" + QString::number(week) + " day:" + QString::number(day) + " time:" + QString::number(time));
         }
         else
         {
@@ -111,6 +112,7 @@ void add_event_window::slot_click_confirm_button()
                                      tr("事件添加成功"),
                                      QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Ok);
+            father->my_debugger->out("日常活动添加成功: name:" + ui->event_line->text() + " site:" + ui->site_line->text() + " week:" + QString::number(week) + " day:" + QString::number(day) + " time:" + QString::number(time));
             father->set_schedule();
             father->my_alarm->init_combo();
             return;
@@ -141,6 +143,7 @@ void add_event_window::slot_click_confirm_button()
                                      tr("事件添加成功"),
                                      QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Ok);
+            father->my_debugger->out("日常活动添加成功: name:" + ui->event_line->text() + " site:" + ui->site_line->text() + " week:" + QString::number(week) + " day:" + QString::number(day) + " time:" + QString::number(time));
             father->set_schedule();
             father->my_alarm->init_combo();
             return;
@@ -155,6 +158,7 @@ void add_event_window::slot_click_confirm_button()
                                      tr("提示"),
                                      tr("添加成功"),
                                      QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+            father->my_debugger->out("日常活动添加成功: name:" + ui->event_line->text() + " site:" + ui->site_line->text() + " week:" + QString::number(week) + " day:" + QString::number(day) + " time:" + QString::number(time));
             father->set_schedule();
             father->my_alarm->init_combo();
         }
@@ -183,6 +187,7 @@ void add_event_window::slot_click_confirm_button()
                                          tr("提示"),
                                          tr("添加成功,原有的临时事务被删除"),
                                          QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+                father->my_debugger->out("日常活动添加成功 同时此时的临时事务被覆盖: name:" + ui->event_line->text() + " site:" + ui->site_line->text() + " week:" + QString::number(week) + " day:" + QString::number(day) + " time:" + QString::number(time));
             }
             else
             {

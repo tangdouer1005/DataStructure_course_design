@@ -26,6 +26,7 @@ navigation_window::~navigation_window()
 void navigation_window::slot_click_button_navigation()
 {
     clean_label();
+    father->my_debugger->out("导航查询:" + ui->start->text() + "到" + ui->end->text());
     shortestPath(ui->start->text(), ui->end->text());
 }
 void navigation_window::init_node()

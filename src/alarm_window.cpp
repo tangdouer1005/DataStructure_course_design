@@ -137,6 +137,7 @@ void alarm_window::slot_click_temporary_button()
     alarming_temporary_event.insert(name);
     QListWidgetItem *item = new QListWidgetItem("临时事务 " + name + QString(" ") + time);
     ui->show_alarm->addItem(item);
+    father->my_debugger->out("临时事务闹钟添加成功: name:" + name + QString(" ") + time);
     init_combo();
 }
 void alarm_window::slot_click_dairy_button()
@@ -179,6 +180,8 @@ void alarm_window::slot_click_dairy_button()
     alarming_dairy_event.insert(name);
     QListWidgetItem *item = new QListWidgetItem(QString("日常活动 ") + name + QString(" ") + time);
     ui->show_alarm->addItem(item);
+
+    father->my_debugger->out("日常活动闹钟添加成功: name:" + name + QString(" ") + time);
     init_combo();
 }
 void alarm_window::slot_click_list(QListWidgetItem *content)
@@ -191,10 +194,12 @@ void alarm_window::slot_click_list(QListWidgetItem *content)
         QStringList parts = content->text().split(" ");
         if (parts[0] == QString("日常活动"))
         {
+            father->my_debugger->out("日常活动闹钟删除: " + content->text());
             alarming_dairy_event.erase(parts[1]);
         }
         else
         {
+            father->my_debugger->out("临时事务闹钟删除: " + content->text());
             alarming_temporary_event.erase(parts[1]);
         }
         delete content;

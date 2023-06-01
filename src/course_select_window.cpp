@@ -67,6 +67,7 @@ void course_select_window::slot_click_confirm()
                                  tr("添加成功"),
                                  QMessageBox::Ok | QMessageBox::Cancel,
                                  QMessageBox::Ok);
+        father->my_debugger->out("课程添加成功 课程:" + name.toUtf8());
         father->user->courses.push_back(name);
         father->get_course_event();
         father->set_schedule();
