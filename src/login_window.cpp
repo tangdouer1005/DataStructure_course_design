@@ -181,6 +181,16 @@ void login_window::slot_login_click()
             }
             father->init_log();
             father->my_debugger->out("登陆成功 id:" + in_id);
+
+            QString htmlText = "<p style='font-size:20pt;'>ID: " + in_id.toUtf8() + "</p>";
+            htmlText += "<p style='font-size:20pt;'>GRADE: Sophomore</p>";
+            htmlText += "<p style='font-size:20pt;'>CLASS: 2021211260</p>";
+
+            QTextCharFormat format;
+            format.setFontPointSize(20);
+
+            father->ui->textBrowser->setCurrentCharFormat(format);
+            father->ui->textBrowser->setHtml(htmlText);
         }
         else
         {
