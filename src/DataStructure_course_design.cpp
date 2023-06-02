@@ -218,9 +218,12 @@ void DataStructure_course_design::slot_timer_update()
                                          tr("rt"),
                                          QMessageBox::Ok | QMessageBox::Cancel,
                                          QMessageBox::Ok);
+                return;
             }
             my_navigation->clean_label();
             my_navigation->shortestPath(QString("学五公寓"), site);
+            my_navigation->ui->list_agenda->clear();
+            my_navigation->ui->list_agenda->addItem(schedule[user->week - 1][user->day - 1][user->hour - 6]);
             stop();
             my_navigation->show();
         }
@@ -228,29 +231,37 @@ void DataStructure_course_design::slot_timer_update()
         {
             QString some = QString("");
             auto tem = find_tem(user->week, user->day, user->hour);
-            std::vector<QString> site;
-            site.push_back(QString("学五公寓"));
-            my_navigation->ui->list_agenda->clear();
-            for (auto iter : tem)
+            if (tem.size())
             {
-                if (my_alarm->alarming_temporary_event.count(iter.name))
+                std::vector<QString> site;
+                site.push_back(QString("学五公寓"));
+                std::set<QString> hash;
+                my_navigation->ui->list_agenda->clear();
+                for (auto iter : tem)
                 {
-                    some += iter.name + " ";
-                    site.push_back(iter.site);
-                    my_navigation->ui->list_agenda->addItem(iter.site.toUtf8() + " " + iter.name.toUtf8());
+                    if (my_alarm->alarming_temporary_event.count(iter.name))
+                    {
+                        some += iter.name + " ";
+                        hash.insert(iter.site);
+                        my_navigation->ui->list_agenda->addItem(iter.site.toUtf8() + " " + iter.name.toUtf8());
+                    }
                 }
-            }
-            my_navigation->find_shortest_path(site);
-            stop();
-            my_navigation->show();
-            if (some != QString(""))
-            {
-                QMessageBox::information(this,
-                                         tr("临时事务闹钟"),
-                                         tr(some.toUtf8()),
-                                         QMessageBox::Ok | QMessageBox::Cancel,
-                                         QMessageBox::Ok);
-                my_debugger->out("临时事务闹钟: week " + QString::number(user->week) + " day " + QString::number(user->day) + " time " + QString::number(user->day));
+                for (auto iter : hash)
+                {
+                    site.push_back(iter);
+                }
+                my_navigation->find_shortest_path(site);
+                stop();
+                my_navigation->show();
+                if (some != QString(""))
+                {
+                    QMessageBox::information(this,
+                                             tr("临时事务闹钟"),
+                                             tr(some.toUtf8()),
+                                             QMessageBox::Ok | QMessageBox::Cancel,
+                                             QMessageBox::Ok);
+                    my_debugger->out("临时事务闹钟: week " + QString::number(user->week) + " day " + QString::number(user->day) + " time " + QString::number(user->day));
+                }
             }
         }
         if (courses.count(schedule[user->week - 1][user->day - 1][user->hour - 6]))
@@ -622,28 +633,35 @@ void DataStructure_course_design::slot_event_search()
             }
             else
             {
-                if (day == 0)
+                if (time == 0)
                 {
-                    if (iter.hour == time)
+                    if (day == 0)
                     {
-                        (my_showevent->ui->show_something)->append(eve);
-                    }
-                }
-                else
-                {
-                    if (week == 0)
-                    {
-                        if (iter.hour == time && iter.day == day)
+                        if (week == 0)
                         {
                             (my_showevent->ui->show_something)->append(eve);
+                        }
+                        else
+                        {
+                            if (iter.week == week)
+                            {
+                                (my_showevent->ui->show_something)->append(eve);
+                            }
                         }
                     }
                     else
                     {
-                        if (iter.week == week && iter.day == day && iter.hour == time)
+                        if (iter.week == week && iter.day == day)
                         {
                             (my_showevent->ui->show_something)->append(eve);
                         }
+                    }
+                }
+                else
+                {
+                    if (iter.week == week && iter.day == day && iter.hour == time)
+                    {
+                        (my_showevent->ui->show_something)->append(eve);
                     }
                 }
             }
