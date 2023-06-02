@@ -325,7 +325,7 @@ void DataStructure_course_design::init_log()
 void DataStructure_course_design::member_init()
 {
     // 课程表初始化
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 16; i++)
     {
         for (int j = 0; j < 7; j++)
         {
