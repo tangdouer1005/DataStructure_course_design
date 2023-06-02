@@ -63,36 +63,37 @@ void navigation_window::init_node()
         y_to_node.insert({iter.second->y, iter.second});
     }
 }
+#define ARROW_LEN 5
 void navigation_window::draw_line(int x1, int y1, int x2, int y2)
 {
     my_painter->begin(&my_pic);
     my_painter->setPen(Qt::black);
     my_painter->drawLine(x1, y1, x2, y2);
-    my_painter->setPen(Qt::red);
+    my_painter->setPen(QPen(Qt::red, 3));
     if (x1 == x2)
     {
         if (y1 > y2)
         {
-            my_painter->drawLine(x2, y2, x2 + 2, y2 + 2);
-            my_painter->drawLine(x2, y2, x2 - 2, y2 + 2);
+            my_painter->drawLine(x2, y2, x2 + ARROW_LEN, y2 + ARROW_LEN);
+            my_painter->drawLine(x2, y2, x2 - ARROW_LEN, y2 + ARROW_LEN);
         }
         else
         {
-            my_painter->drawLine(x2, y2, x2 - 2, y2 - 2);
-            my_painter->drawLine(x2, y2, x2 + 2, y2 - 2);
+            my_painter->drawLine(x2, y2, x2 - ARROW_LEN, y2 - ARROW_LEN);
+            my_painter->drawLine(x2, y2, x2 + ARROW_LEN, y2 - ARROW_LEN);
         }
     }
     else
     {
         if (x1 > x2)
         {
-            my_painter->drawLine(x2, y2, x2 + 2, y2 - 2);
-            my_painter->drawLine(x2, y2, x2 + 2, y2 + 2);
+            my_painter->drawLine(x2, y2, x2 + ARROW_LEN, y2 - ARROW_LEN);
+            my_painter->drawLine(x2, y2, x2 + ARROW_LEN, y2 + ARROW_LEN);
         }
         else
         {
-            my_painter->drawLine(x2, y2, x2 - 2, y2 - 2);
-            my_painter->drawLine(x2, y2, x2 - 2, y2 + 2);
+            my_painter->drawLine(x2, y2, x2 - ARROW_LEN, y2 - ARROW_LEN);
+            my_painter->drawLine(x2, y2, x2 - ARROW_LEN, y2 + ARROW_LEN);
         }
     }
     my_painter->end();
