@@ -123,7 +123,7 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
             for (auto i : this_course->course_time)
             {
                 int st = i.second[0];
-                st += 7;
+                st += 5;
                 int ed = st + i.second.size();
                 time += QString("周") + QString::number(i.first) + " " + QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
             }
@@ -131,7 +131,7 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
             QString final_exam_time = QString("期末时间: 第18周");
             // final_exam_time +=
             int st = (this_course->exam_time).second[0];
-            st += 7;
+            st += 5;
             int ed = st + (this_course->exam_time).second.size();
             final_exam_time += QString::number(st) + QString(":00~") + QString::number(ed) + QString(":00 ");
             QString final_exam_site = "期末地点: " + this_course->exam_site_building;
@@ -589,14 +589,14 @@ void DataStructure_course_design::set_schedule()
 {
     for (int i = 0; i < 7; i++)
     {
-        for (int j = 0; j < 15; j++)
+        for (int j = 0; j < 16; j++)
         {
             (ui->my_schedule_table->item(j, i))->setText("");
         }
     }
     for (int i = 0; i < 7; i++)
     {
-        for (int j = 0; j < 15; j++)
+        for (int j = 0; j < 16; j++)
         {
             (ui->my_schedule_table->item(j, i))->setText(schedule[user->week - 1][i][j]);
         }
