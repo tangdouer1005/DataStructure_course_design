@@ -480,10 +480,10 @@ void DataStructure_course_design::read_course_information()
                 {
                     tmp_ci->course_weeks.push_back(i);
                 }
-                tmp_ci->course_time.push_back({day.toInt(), std::vector<int>(1, time.toInt())});
+                tmp_ci->course_time.push_back({day.toInt(), std::vector<int>(1, time.toInt() - 5)});
                 for (int i = 1; i < num.toInt(); i++)
                 {
-                    tmp_ci->course_time[0].second.push_back(time.toInt() + i);
+                    tmp_ci->course_time[0].second.push_back(time.toInt() - 5 + i);
                 }
                 tmp_ci->exam_week = 18;
                 tmp_ci->exam_time = tmp_ci->course_time[0];
@@ -504,10 +504,10 @@ void DataStructure_course_design::read_course_information()
                 {
                     tmp_ci->course_weeks.push_back(i);
                 }
-                tmp_ci->course_time.push_back({day.toInt(), std::vector<int>(1, time.toInt())});
+                tmp_ci->course_time.push_back({day.toInt(), std::vector<int>(1, time.toInt() - 5)});
                 for (int i = 1; i < num.toInt(); i++)
                 {
-                    tmp_ci->course_time[0].second.push_back(time.toInt() + i);
+                    tmp_ci->course_time[0].second.push_back(time.toInt() - 5 + i);
                 }
                 tmp_ci->exam_week = 18;
                 tmp_ci->exam_time = tmp_ci->course_time[0];
