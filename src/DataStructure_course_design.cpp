@@ -324,6 +324,14 @@ void DataStructure_course_design::init_log()
 }
 void DataStructure_course_design::member_init()
 {
+    // 课程表初始化
+    for (int i = 0; i < 15; i++)
+    {
+        for (int j = 0; j < 7; j++)
+        {
+            ui->my_schedule_table->setItem(i, j, new QTableWidgetItem(""));
+        }
+    }
     // 成员初始化, 内存分配
     user = new user_information();
     user->week = 1, user->day = 1, user->hour = 0;
@@ -360,6 +368,7 @@ void DataStructure_course_design::member_init()
 
     connect(ui->button_add, &QPushButton::clicked, [=]()
             {my_add->show();stop(); });
+    connect(ui->my_schedule_table, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slot_click_cell(QTableWidgetItem *)));
     // connect(my_add->ui->confirm_button, SIGNAL(clicked()), this, SLOT(slot_add_dairy()));
     QSize size = my_navigation->ui->label_map->sizeHint(); // 获取自适应大小后的控件大小
     int width = size.width();                              // 获取控件的宽度
@@ -505,16 +514,6 @@ void DataStructure_course_design::read_course_information()
 
 void DataStructure_course_design::get_course_event()
 {
-    // 课程表初始化
-    for (int i = 0; i < 15; i++)
-    {
-        for (int j = 0; j < 7; j++)
-        {
-            ui->my_schedule_table->setItem(i, j, new QTableWidgetItem(""));
-        }
-    }
-
-    connect(ui->my_schedule_table, SIGNAL(itemClicked(QTableWidgetItem *)), this, SLOT(slot_click_cell(QTableWidgetItem *)));
     for (auto course : user->courses)
     {
         if (courses.count(course))

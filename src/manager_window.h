@@ -2,6 +2,12 @@
 #define MANAGER_WINDOW_H
 #include "ui_manager_window.h"
 #include <QMainWindow>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QStringList>
+#include <QDebug>
+
 #include "DataStructure_course_design.h"
 class DataStructure_course_design;
 
