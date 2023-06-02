@@ -4,7 +4,7 @@ manager_window::manager_window(QWidget *parent)
     : QMainWindow(parent), father((class DataStructure_course_design *)parent), ui(new Ui_manager_window)
 {
     ui->setupUi(this);
-    this->setFixedSize(344, 292);
+    this->setFixedSize(351, 286);
     connect(ui->add_button, SIGNAL(clicked()), this, SLOT(slot_click_button_add()));
     connect(ui->modify_button, SIGNAL(clicked()), this, SLOT(slot_click_button_modify()));
 }

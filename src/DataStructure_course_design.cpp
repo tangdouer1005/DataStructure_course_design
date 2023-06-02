@@ -4,7 +4,7 @@ DataStructure_course_design::DataStructure_course_design(QWidget *parent)
     : QMainWindow(parent), ui(new Ui_DataStructure_course_design)
 {
     ui->setupUi(this);
-    this->setFixedSize(1140, 668);
+    this->setFixedSize(1114, 699);
 
     member_init();
     read_course_information();
