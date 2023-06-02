@@ -81,6 +81,8 @@ void manager_window::slot_click_button_add()
                                  tr("课程添加成功"),
                                  QMessageBox::Ok | QMessageBox::Cancel,
                                  QMessageBox::Ok);
+
+        father->my_select->init_combobox();
     }
     else
     {
@@ -186,5 +188,6 @@ void manager_window::slot_click_button_modify()
                                      QMessageBox::Ok | QMessageBox::Cancel,
                                      QMessageBox::Ok);
         }
+        father->my_select->init_combobox();
     }
 }

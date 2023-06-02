@@ -21,7 +21,6 @@ DataStructure_course_design::~DataStructure_course_design()
     {
         QTextStream fileOut(&file);
         fileOut.setCodec("UTF-8"); // 确定编码格式
-
         fileOut << user->id << " " << user->password << "\n";
         fileOut << user->week << " " << user->day << " " << user->hour << "\n";
         fileOut << user->courses.size() << "\n";
@@ -106,6 +105,7 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
                             (my_showevent->ui->show_something)->append("时间:第" + QString::number(iter.week) + "周周" + QString::number(iter.day) + " " + QString::number(iter.hour) + ":00");
                         }
                         (my_showevent->ui->show_something)->append("地点 " + iter.site);
+                        my_debugger->out("日常活动查询");
                     }
                 }
             }
@@ -142,9 +142,14 @@ void DataStructure_course_design::slot_click_cell(QTableWidgetItem *item)
             (my_showevent->ui->show_something)->append(final_exam_time);
             (my_showevent->ui->show_something)->append(final_exam_site);
             my_debugger->out("课程查询" + item->text());
+            my_navigation->clean_label();
+            my_navigation->shortestPath(QString("学五公寓"), courses[item->text()]->course_site_building);
+            my_navigation->ui->list_agenda->clear();
+            my_navigation->ui->list_agenda->addItem(item->text());
+            my_navigation->show();
         }
-        stop();
         my_showevent->show();
+        stop();
     }
 }
 
@@ -459,11 +464,14 @@ void DataStructure_course_design::read_course_information()
     {
         QTextStream file_man_in(&file_man);
         file_man_in.setCodec("UTF-8"); // 确定编码格式
-        while (!course_in.atEnd())
+        while (!file_man_in.atEnd())
         {
             QString type;
             QString name, day, time, num, site, room, exam_site, exam_room;
-            file_man_in >> type >> name >> day >> time >> num >> site >> room >> exam_site >> exam_room;
+            file_man_in >> type;
+            if (type == QString(""))
+                continue;
+            file_man_in >> name >> day >> time >> num >> site >> room >> exam_site >> exam_room;
             if (type == QString("0"))
             {
                 course_information *tmp_ci = new course_information;
@@ -510,6 +518,11 @@ void DataStructure_course_design::read_course_information()
             }
             else
             {
+                QMessageBox::information(this,
+                                         tr("wrong"),
+                                         tr(type.toUtf8()),
+                                         QMessageBox::Ok | QMessageBox::Cancel,
+                                         QMessageBox::Ok);
             }
         }
     }
