@@ -235,7 +235,19 @@ void DataStructure_course_design::slot_timer_update()
         if (schedule[user->week - 1][user->day - 1][user->hour - 6] == QString("temporary"))
         {
             QString some = QString("");
-            auto tem = find_tem(user->week, user->day, user->hour);
+            auto fuck = find_tem(user->week, user->day, user->hour);
+            std::vector<event_information> tem;
+            for (auto iter : my_alarm->alarming_temporary_event)
+            {
+                for (auto jter : fuck)
+                {
+                    if (iter == jter.name)
+                    {
+                        tem.push_back(jter);
+                        break;
+                    }
+                }
+            }
             if (tem.size())
             {
                 std::vector<QString> site;
