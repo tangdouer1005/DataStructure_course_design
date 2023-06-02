@@ -26,6 +26,11 @@ login_window::login_window(QWidget *parent)
         }
     }
     idFile.close();
+    QRegExp regExp("[A-Za-z0-9]*");
+    QValidator *validator = new QRegExpValidator(regExp, this);
+    ui->lineedit_id->setValidator(validator);
+    ui->lineedit_password->setValidator(validator);
+    ui->lineedit_password->setEchoMode(QLineEdit::Password);
 }
 
 login_window::~login_window()
@@ -54,7 +59,15 @@ void login_window::slot_login_click()
 {
     QString in_id = ui->lineedit_id->text();
     QString in_password = ui->lineedit_password->text();
-
+    if (in_id.size() < 5 || in_id.size() > 12 || in_password.size() < 5 || in_password.size() > 12)
+    {
+        QMessageBox::information(this,
+                                 tr("wrong"),
+                                 tr("id和password的长度都要保持在5到12"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
+        return;
+    }
     if (!ui->user_radio->isChecked() && !ui->manager_radio->isChecked())
     {
         QMessageBox::information(this,
@@ -192,7 +205,24 @@ void login_window::slot_register_click()
 {
     QString in_id = ui->lineedit_id->text();
     QString in_password = ui->lineedit_password->text();
-
+    if (in_id.size() < 5 || in_id.size() > 12 || in_password.size() < 5 || in_password.size() > 12)
+    {
+        QMessageBox::information(this,
+                                 tr("wrong"),
+                                 tr("id和password的长度都要保持在5到12"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
+        return;
+    }
+    if (!ui->user_radio->isChecked())
+    {
+        QMessageBox::information(this,
+                                 tr("wrong"),
+                                 tr("注册请选择user"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
+        return;
+    }
     if (id2password.count(in_id))
     {
         QMessageBox::information(this,

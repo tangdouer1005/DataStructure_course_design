@@ -39,7 +39,17 @@ void add_event_window::slot_click_confirm_button()
     }
     else if (ui->temporary_button->isChecked())
     {
-
+        for (auto iter : father->user->temporary_event)
+        {
+            if (iter.day == day && iter.week == week && iter.hour == time && iter.name == ui->event_line->text())
+            {
+                QMessageBox::information(this,
+                                         tr("错误"),
+                                         tr("已经存在此临时事务"),
+                                         QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+                return;
+            }
+        }
         if (day == 0) // 每天都有
         {
             QMessageBox::information(this,

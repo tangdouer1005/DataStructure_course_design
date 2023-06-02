@@ -58,6 +58,39 @@ typedef struct event_information
     QString site;        // 活动地点
     int week, day, hour; // 活动时间
     event_information(QString name, QString site, int week, int day, int hour) : name(name), site(site), week(week), day(day), hour(hour) {}
+    bool operator<(const event_information &other) const
+    {
+        if (week < other.week)
+        {
+            return true;
+        }
+        else if (week > other.week)
+        {
+            return false;
+        }
+        else
+        {
+            if (day < other.day)
+            {
+                return true;
+            }
+            else if (day > other.day)
+            {
+                return false;
+            }
+            else
+            {
+                if (hour < other.hour)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+    }
 } event_information;
 
 typedef struct user_information
@@ -114,6 +147,7 @@ private slots:
     void slot_timer_update();
     void slot_time_edit();
     void slot_time_st();
+    void slot_event_search();
 
 private:
     Ui_DataStructure_course_design *ui;

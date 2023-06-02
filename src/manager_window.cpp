@@ -76,6 +76,11 @@ void manager_window::slot_click_button_add()
                 << ui->exam_site->text() << " "
                 << ui->exam_room->text() << "\n";
         file.close();
+        QMessageBox::information(this,
+                                 tr("run"),
+                                 tr("课程添加成功"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
     }
     else
     {
@@ -150,6 +155,11 @@ void manager_window::slot_click_button_modify()
                 << ui->exam_site->text() << " "
                 << ui->exam_room->text() << "\n";
         file.close();
+        QMessageBox::information(this,
+                                 tr("run"),
+                                 tr("课程修改成功"),
+                                 QMessageBox::Ok | QMessageBox::Cancel,
+                                 QMessageBox::Ok);
     }
     else
     {
