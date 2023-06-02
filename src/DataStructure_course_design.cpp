@@ -294,7 +294,7 @@ void DataStructure_course_design::slot_timer_update()
                                          QMessageBox::Ok | QMessageBox::Cancel,
                                          QMessageBox::Ok);
                 my_navigation->ui->list_agenda->clear();
-                my_navigation->ui->list_agenda->addItem(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8() + " " + courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->exam_site_building.toUtf8());
+                my_navigation->ui->list_agenda->addItem(schedule[user->week - 1][user->day - 1][user->hour - 6].toUtf8() + " " + courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->course_site_building.toUtf8());
                 my_navigation->clean_label();
                 my_navigation->shortestPath(QString("学五公寓"), courses[schedule[user->week - 1][user->day - 1][user->hour - 6]]->course_site_building);
                 stop();
