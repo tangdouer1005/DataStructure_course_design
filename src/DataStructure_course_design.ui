@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1114</width>
-    <height>699</height>
+    <width>1195</width>
+    <height>712</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>410</y>
+      <y>440</y>
       <width>261</width>
       <height>51</height>
      </rect>
@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>540</y>
+      <y>580</y>
       <width>261</width>
       <height>51</height>
      </rect>
@@ -45,7 +45,7 @@
      <rect>
       <x>300</x>
       <y>130</y>
-      <width>801</width>
+      <width>811</width>
       <height>511</height>
      </rect>
     </property>
@@ -192,7 +192,7 @@
    <widget class="QPushButton" name="button_find">
     <property name="geometry">
      <rect>
-      <x>870</x>
+      <x>910</x>
       <y>15</y>
       <width>121</width>
       <height>41</height>
@@ -339,7 +339,7 @@
    <widget class="QRadioButton" name="dairy">
     <property name="geometry">
      <rect>
-      <x>870</x>
+      <x>910</x>
       <y>55</y>
       <width>51</width>
       <height>51</height>
@@ -352,7 +352,7 @@
    <widget class="QRadioButton" name="tem">
     <property name="geometry">
      <rect>
-      <x>930</x>
+      <x>970</x>
       <y>60</y>
       <width>71</width>
       <height>41</height>
@@ -365,7 +365,7 @@
    <widget class="QSpinBox" name="time_spinbox_search">
     <property name="geometry">
      <rect>
-      <x>1050</x>
+      <x>1140</x>
       <y>80</y>
       <width>42</width>
       <height>22</height>
@@ -375,7 +375,7 @@
    <widget class="QSpinBox" name="week_spinbox_search">
     <property name="geometry">
      <rect>
-      <x>1050</x>
+      <x>1140</x>
       <y>20</y>
       <width>42</width>
       <height>22</height>
@@ -385,7 +385,7 @@
    <widget class="QSpinBox" name="day_spinbox_search">
     <property name="geometry">
      <rect>
-      <x>1050</x>
+      <x>1140</x>
       <y>50</y>
       <width>42</width>
       <height>22</height>
@@ -395,7 +395,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>1010</x>
+      <x>1080</x>
       <y>10</y>
       <width>41</width>
       <height>31</height>
@@ -408,7 +408,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>1010</x>
+      <x>1080</x>
       <y>40</y>
       <width>41</width>
       <height>31</height>
@@ -421,7 +421,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>1010</x>
+      <x>1080</x>
       <y>70</y>
       <width>41</width>
       <height>31</height>
@@ -472,8 +472,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1114</width>
-     <height>23</height>
+     <width>1195</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
